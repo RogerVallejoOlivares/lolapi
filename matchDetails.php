@@ -46,7 +46,7 @@ require __DIR__ . '/inc.config.php';
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($game->participants as $player){
+            <?php foreach ($game->participants as $player) {
                 $stats = $player->stats;
                 $kda = ($stats->kills + $stats->assists)/$stats->deaths;
                 if($kda == "INF"){
