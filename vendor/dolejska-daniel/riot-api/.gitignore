@@ -1,0 +1,12 @@
+.idea/
+
+# Composer files
+vendor/
+
+# Testing data
+tests/Coverage/
+tests/LeagueAPI/Definition/cache-fcp/
+
+# Cache
+src/LeagueAPI/cache/
+src/DataDragonAPI/cache/

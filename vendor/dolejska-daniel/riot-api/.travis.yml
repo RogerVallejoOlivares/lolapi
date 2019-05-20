@@ -1,0 +1,50 @@
+# Project language
+language: php
+
+sudo: required
+
+dist: trusty
+
+# Language versions to test agains
+php:
+    - '7.0'
+    - '7.1'
+    - '7.2'
+    - '7.3'
+    - '7.4snapshot'
+    - nightly
+#    - hhvm
+
+matrix:
+    fast_finish: true
+    allow_failures:
+        - php: nightly
+
+# Allow addons
+addons:
+    code_climate:
+        repo_token: $CODECLIMATE_REPO_TOKEN
+
+# Save cache of dependencies
+cache:
+    directories:
+        - vendor/
+
+# Install dependencies
+install:
+    - composer install
+
+# Jobs specifications
+jobs:
+    include:
+    - # identify pull requests by environment variable
+        if: type = pull_request
+        env: BUILD_IS_PULL_REQUEST=1
+
+# Start tests
+script:
+    - vendor/bin/phpunit -v --bootstrap phpunit.php --configuration phpunit_LeagueAPI.xml --coverage-text --coverage-clover $TRAVIS_BUILD_DIR/build/logs/clover.xml --colors=never
+
+# Submit coverage results
+after_success:
+    - vendor/bin/test-reporter -n --coverage-report=$TRAVIS_BUILD_DIR/build/logs/clover.xml --verbose

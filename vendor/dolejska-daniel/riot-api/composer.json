@@ -1,0 +1,32 @@
+{
+	"name": "dolejska-daniel/riot-api",
+	"type": "library",
+	"description": "Riot League of Legends & DataDragon API wrapper for PHP7",
+	"keywords": ["riot", "league of legends", "data dragon", "api", "wrapper", "php7"],
+	"homepage": "https://github.com/dolejska-daniel/riot-api",
+	"license": "GPL-3.0-or-later",
+	"authors": [
+		{
+			"name": "Daniel Dolejška",
+			"email": "dolejskad@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"nette/utils": "^2.5",
+		"guzzlehttp/guzzle": "^6.3",
+		"php": "^7.0.0",
+		"ext-json": "*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "6.2.2",
+		"codeclimate/php-test-reporter": "v0.4.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"RiotAPI\\DataDragonAPI\\": "src/DataDragonAPI",
+			"RiotAPI\\LeagueAPI\\": "src/LeagueAPI"
+		}
+	},
+	"minimum-stability": "stable"
+}
