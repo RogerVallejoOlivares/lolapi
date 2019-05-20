@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit50b4e1e2331b7313217c4b0e19efd0fe
+class ComposerStaticInit1c7a371e608596bf9ac52c363f2c8f88
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -12,6 +12,8 @@ class ComposerStaticInit50b4e1e2331b7313217c4b0e19efd0fe
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'a12da592622097d2b593a430e32e13fd' => __DIR__ . '/..' . '/nette/utils/src/loader.php',
+        '71ecd0286a4e74fd8732297fb587023c' => __DIR__ . '/..' . '/thingengineer/mysqli-database-class/MysqliDb.php',
+        'd383f1ec7b1e54a09cb53eb6fcf751e0' => __DIR__ . '/..' . '/thingengineer/mysqli-database-class/dbObject.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -106,9 +108,9 @@ class ComposerStaticInit50b4e1e2331b7313217c4b0e19efd0fe
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit50b4e1e2331b7313217c4b0e19efd0fe::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit50b4e1e2331b7313217c4b0e19efd0fe::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit50b4e1e2331b7313217c4b0e19efd0fe::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1c7a371e608596bf9ac52c363f2c8f88::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1c7a371e608596bf9ac52c363f2c8f88::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit1c7a371e608596bf9ac52c363f2c8f88::$classMap;
 
         }, null, ClassLoader::class);
     }
