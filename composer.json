@@ -1,0 +1,5 @@
+{
+    "require": {
+        "dolejska-daniel/riot-api": "^3.0"
+    }
+}
