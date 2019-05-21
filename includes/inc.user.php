@@ -89,7 +89,13 @@ class User {
     
     public function save() {
         $this->db->where(self::$usernameField, $this->userPropierties[self::$usernameField]);
-        $r = $this->db->update($this->userPropierties);
+        $r = $this->db->update(self::$tableName, $this->userPropierties);
+        return ($r);
+    }
+    
+    public function delete() {
+        $this->db->where(self::$usernameField, $this->userPropierties[self::$usernameField]);
+        $r = $this->db->delete(self::$tableName, $this->userPropierties);
         return ($r);
     }
     
