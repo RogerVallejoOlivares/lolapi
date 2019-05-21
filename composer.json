@@ -1,6 +1,6 @@
 {
     "require": {
       "dolejska-daniel/riot-api": "^3.0",
-      "thingengineer/mysqli-database-class": "dev-master",
+      "thingengineer/mysqli-database-class": "dev-master"
     }
 }
