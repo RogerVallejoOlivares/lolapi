@@ -24,6 +24,8 @@ class User {
         $this->userPropierties['name'] = $name;
         $this->db = MysqliDb::getInstance();
         
+        $this->load();
+        
         return $this;
     }
     
@@ -31,7 +33,7 @@ class User {
     public static function userExists($name) {
         $db = MysqliDb::getInstance();
         $db->where(self::$usernameField, $name);
-        $count = $db->getOne(self::$tableName, 'count(*)');
+        $count = $db->getValue(self::$tableName, 'count(*)');
         if ($count !== null && is_int($count)) {
             return ($count > 0);
         }
@@ -51,6 +53,7 @@ class User {
         }
         
         if(User::userExists($name)) {
+            print("user already exists");
             return false;
         }
         
@@ -63,18 +66,20 @@ class User {
             'birthDay'  => $birthDay
         );
                        
-        $this->db->insert($this->tableName, $data);
+        $db = MysqliDb::getInstance();
+        $db->insert(self::$tableName, $data);
         
-        $user = new User($data[$this->usernameField]);
+        $user = new User($data[self::$usernameField]);
         return $user;
     }
     
     /** Class functions **/
     public function load() {
-        $this->db->where($this->usernameField, $this->userPropierties[self::$usernameField]);
-        $r = $db->getOne($this->tableName);
-        if($r->count > 0) {        
-            $this->userPropierties['id'] = $r['id'];
+        $this->db->where(self::$usernameField, $this->userPropierties[self::$usernameField]);
+        $r = $this->db->getOne(self::$tableName);
+
+        if(isset($r) && $this->db->count > 0) {        
+            $this->userPropierties['id'] = $r['idManager'];
             $this->userPropierties['lastname'] = $r['lastname'];
             $this->userPropierties['email'] = $r['email'];
             $this->userPropierties['password'] = $r['password'];
@@ -95,7 +100,7 @@ class User {
     
     public function delete() {
         $this->db->where(self::$usernameField, $this->userPropierties[self::$usernameField]);
-        $r = $this->db->delete(self::$tableName, $this->userPropierties);
+        $r = $this->db->delete(self::$tableName);
         return ($r);
     }
     
