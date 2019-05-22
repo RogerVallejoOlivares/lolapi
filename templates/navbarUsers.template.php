@@ -29,6 +29,10 @@
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'profile') { echo 'borderBot'; } ?>" href="#Settings">Settings</a>
                     </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="index.php?logout">Logout</a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -1,11 +1,13 @@
 <?php
 
-require('../inc.config.php');
+require('inc.config.php');
 
 class User {
     private static $tableName = 'Manager';
     private static $usernameField = 'email';
     private static $sessionKey = 'name';
+    
+    private $db;
     
     private $userPropierties = Array(
                 'id' => '',
@@ -18,9 +20,7 @@ class User {
                 'gold' => 0,
                 'elo' => 0
             );
-    
-    private $db;
-
+        
     function __construct($name) {
         $this->userPropierties[self::$usernameField] = $name;
         $this->db = MysqliDb::getInstance();
@@ -42,9 +42,9 @@ class User {
         return false;
     }
         
-    public static function register($name, $lastname, $email, $password, $phone, $birthDay) {
+    public static function register($name, $lastName, $email, $password, $phone, $birthDay) {
         if( !isset($name) || 
-            !isset($lastname) || 
+            !isset($lastName) || 
             !isset($email) || 
             !isset($password) || 
             !isset($phone) ||
@@ -59,7 +59,7 @@ class User {
         
         $data = Array(
             'name'      => $name,
-            'lastname'  => $lastname,
+            'lastname'  => $lastName,
             'email'     => $email,
             'password'  => $password,
             'phone'     => $phone,
@@ -69,8 +69,25 @@ class User {
         $db = MysqliDb::getInstance();
         $db->insert(self::$tableName, $data);
         
+        if(!User::exists($data[self::$usernameField])) {
+            return false;
+        }
+        
         $user = new User($data[self::$usernameField]);
         return $user;
+    }
+    
+    public static function getCurrentUser() {
+        if(!isset($_SESSION)) {
+            return false;
+        }
+        
+        if(!isset($_SESSION[self::$sessionKey])) {
+            return false;
+        }
+        
+        $user = new User($_SESSION[self::$sessionKey]);
+        return ($user);
     }
     
     /** Class functions **/
@@ -109,7 +126,7 @@ class User {
         return ($hashedPassword);
     }
     
-    public function login() {
+    public function login($password) {
         if(!User::exists($this->userPropierties[self::$usernameField])) {
             return false;
         }
@@ -120,6 +137,10 @@ class User {
         
         if(!isset($_SESSION)) {
             // session cannot be created
+            return false;
+        }
+        
+        if($this->hashPassword($password) != $this->getPassword()) {
             return false;
         }
         
@@ -173,7 +194,7 @@ class User {
     
     public function getPassword($reload = false) {
         $property = $this->getProperty('password', $reload);
-        $property = $this->hashPassword($property);
+        //$property = $this->hashPassword($property);
         return ($property);
     }
     

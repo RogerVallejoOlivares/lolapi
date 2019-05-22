@@ -5,6 +5,9 @@
     error_reporting(E_ALL);
 
     require_once __DIR__  . "/vendor/autoload.php";
+    
+    /** Global variables **/
+    @define('CWD', __DIR__.'/');
 
     /** Riot API setup */
     use RiotAPI\LeagueAPI\LeagueAPI;

@@ -6,6 +6,9 @@
      * Time: 08:55
      */
 
+    include('inc.config.php');
+    include(CWD.'/includes/inc.user.php');
+
     if(!isset($_SESSION)) {
         @session_start();
     }
@@ -15,9 +18,24 @@
     include_once('templates/imports.template.php');
     include_once('templates/navbarPreUsers.template.php');
     include_once('templates/header.template.php');
+    
+    $correctLoginPage = 'mainPage.php';
 
-    if($_POST['logIn']){
-        //var_dump($_POST);
+    if(isset($_POST['logIn'])){
+         $email = $_POST['email'];
+         $pwd = $_POST['pwd'];
+         
+         $user = new User($email);
+         $login = $user->login($pwd);
+         
+         if($login) {
+             //@header('Location: '.$correctLoginPage);
+             @header('Location: tastafrsaf.php');
+             exit();
+         } else {
+             echo 'incorrect account or password';
+             exit();
+         }
     }
 
     if(isset($_POST['signUp'])) {
@@ -25,11 +43,35 @@
         $lastName = $_POST['lName'];
         $email = $_POST['email'];
         $phone = $_POST['phone'];
-        $date = $_POST['date'];
+        $birthDay = $_POST['date'];
         $pwd = $_POST['pwd'];
         $pwd2 = $_POST['pwd2'];
         
-        
+        if(
+            isset($name) && isset($lastName) && isset($email) && 
+            isset($phone) && isset($birthDay) && isset($pwd) &&
+            isset($pwd2)
+        ) {
+            if($pwd != $pwd2) {
+                echo 'provided passwords dont match';
+                exit();
+            }
+            
+            if(User::exists($email)) {
+                echo 'the user already exists';
+                exit();
+            }
+            
+            $user = User::register($name, $lastName, $email, $pwd, $phone, $birthDay);
+            if(!$user) {
+                echo 'error creating user';
+                exit();
+            }
+            
+            //header('Location: mainPage.php');
+            echo 'user registered';
+            exit();
+        }
     }
     
 ?>
