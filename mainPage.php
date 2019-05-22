@@ -4,7 +4,7 @@
  */
 
     if(!isset($_SESSION)) {
-        session_start();
+        @session_start();
     }
 
     $_SESSION['current_page'] = 'main';

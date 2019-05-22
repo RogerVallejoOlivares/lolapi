@@ -13,7 +13,9 @@
     
     print("[#] test user class".PHP_EOL);
     
-    print("[+] empty user exists? ".(User::userExists('') ? "YES" : "NO").PHP_EOL);
+    print("[#] user creation tests".PHP_EOL);
+    
+    print("[+] empty user exists? ".(User::exists('') ? "YES" : "NO").PHP_EOL);
     
     //$name, $lastname, $email, $password, $phone, $birthDay
     $newUserData = Array(
@@ -35,8 +37,27 @@
     );
     
     print("[+] user registered? ".($newUser ? "YES" : "NO").PHP_EOL);
-    print("[+] new user exists? ".(User::userExists($newUserData['name']) ? "YES" : "NO").PHP_EOL);
-    print("[+] deleted new user? ".($newUser->delete() ? "YES" : "NO").PHP_EOL);
-    print("[+] new user exists after delete? ".(User::userExists($newUserData['name']) ? "YES" : "NO").PHP_EOL);    
-        
+    print("[+] new user exists? ".(User::exists($newUserData['name']) ? "YES" : "NO").PHP_EOL);
+    print("[+] deleted new user? ".($newUser != false && $newUser->delete() ? "YES" : "NO").PHP_EOL);
+    print("[+] new user exists after delete? ".(User::exists($newUserData['name']) ? "YES" : "NO").PHP_EOL);    
+    
+    print("[#] user session test".PHP_EOL);
+    
+    $newUser = null;         
+    $newUser = User::register(
+        $newUserData['name'], 
+        $newUserData['lastname'],
+        $newUserData['email'],
+        $newUserData['password'],
+        $newUserData['phone'],
+        $newUserData['birthDay']
+    );
+     
+    print("[+] new user is logged before login? ".($newUser != false && $newUser->isLogged() ? "YES" : "NO").PHP_EOL);
+    print("[+] new user login? ".(isset($newUser) && $newUser->login() ? "YES" : "NO").PHP_EOL);
+    print("[+] new user is logged after login? ".($newUser != false && $newUser->isLogged() ? "YES" : "NO").PHP_EOL);
+    print("[+] new user logout? ".(isset($newUser) && $newUser->logout() ? "YES" : "NO").PHP_EOL);
+    print("[+] new user is logged after logout? ".($newUser != false && $newUser->isLogged() ? "YES" : "NO").PHP_EOL);
+    print("[+] new user deleted? ".($newUser != false && $newUser->delete() ? "YES" : "NO").PHP_EOL);
+     
 ?>

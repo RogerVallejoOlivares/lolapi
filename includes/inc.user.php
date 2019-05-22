@@ -31,7 +31,7 @@ class User {
     }
     
     /** Static functions **/
-    public static function userExists($name) {
+    public static function exists($name) {
         $db = MysqliDb::getInstance();
         $db->where(self::$usernameField, $name);
         $count = $db->getValue(self::$tableName, 'count(*)');
@@ -53,8 +53,7 @@ class User {
             return false;
         }
         
-        if(User::userExists($name)) {
-            print("user already exists");
+        if(User::exists($name)) {
             return false;
         }
         
@@ -111,18 +110,32 @@ class User {
     }
     
     public function login() {
+        if(!User::exists($this->userPropierties[self::$usernameField])) {
+            return false;
+        }
+        
         if(!isset($_SESSION)) {
-            session_start();
+            @session_start();
+        }
+        
+        if(!isset($_SESSION)) {
+            // session cannot be created
+            return false;
         }
         
         $_SESSION[self::$sessionKey] = $this->userPropierties[self::$usernameField];
+        
+        return true;
     }
     
     public function logout() {
-        if(isset($_SESSION) && $_SESSION[self::$sessionKey] == $this->userPropierties[self::$usernameField]) {
+        if($this->isLogged() && $_SESSION[self::$sessionKey] == $this->userPropierties[self::$usernameField]) {
             $_SESSION[self::$sessionKey] = ''; // seems that the use of 'unset($_SESSION[...]' is not a good practice, so we empty manually the session variable
-            session_destroy();
+            @session_destroy();
+            return true;
         }
+        
+        return false;
     }
     
     public function isLogged() {
