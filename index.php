@@ -1,26 +1,37 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: matalords
- * Date: 17/05/2019
- * Time: 08:55
- */
+    /**
+     * Created by PhpStorm.
+     * User: matalords
+     * Date: 17/05/2019
+     * Time: 08:55
+     */
 
-if(!isset($_SESSION)) {
-    @session_start();
-}
+    if(!isset($_SESSION)) {
+        @session_start();
+    }
 
-$_SESSION['current_page'] = 'index';
+    $_SESSION['current_page'] = 'index';
 
-include_once('templates/imports.template.php');
+    include_once('templates/imports.template.php');
+    include_once('templates/navbarPreUsers.template.php');
+    include_once('templates/header.template.php');
 
-include_once('templates/navbarPreUsers.template.php');
+    if($_POST['logIn']){
+        //var_dump($_POST);
+    }
 
-include_once('templates/header.template.php');
-
-if($_POST['logIn']){
-    //var_dump($_POST);
-}
+    if(isset($_POST['signUp'])) {
+        $name = $_POST['name'];
+        $lastName = $_POST['lName'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $date = $_POST['date'];
+        $pwd = $_POST['pwd'];
+        $pwd2 = $_POST['pwd2'];
+        
+        
+    }
+    
 ?>
 
 

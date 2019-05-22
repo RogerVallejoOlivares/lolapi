@@ -4,7 +4,7 @@ require('../inc.config.php');
 
 class User {
     private static $tableName = 'Manager';
-    private static $usernameField = 'name';
+    private static $usernameField = 'email';
     private static $sessionKey = 'name';
     
     private $userPropierties = Array(
