@@ -3,8 +3,9 @@
 require('../inc.config.php');
 
 class User {
-    private static  $tableName = 'Manager';
+    private static $tableName = 'Manager';
     private static $usernameField = 'name';
+    private static $sessionKey = 'name';
     
     private $userPropierties = Array(
                 'id' => '',
@@ -21,7 +22,7 @@ class User {
     private $db;
 
     function __construct($name) {
-        $this->userPropierties['name'] = $name;
+        $this->userPropierties[self::$usernameField] = $name;
         $this->db = MysqliDb::getInstance();
         
         $this->load();
@@ -105,8 +106,33 @@ class User {
     }
     
     public function hashPassword($password) {
-        $password = base64_encode($password); // this MUST be better (SHA-512?)
-        return ($password);
+        $hashedPassword = base64_encode($password); // this MUST be better (SHA-512?)
+        return ($hashedPassword);
+    }
+    
+    public function login() {
+        if(!isset($_SESSION)) {
+            session_start();
+        }
+        
+        $_SESSION[self::$sessionKey] = $this->userPropierties[self::$usernameField];
+    }
+    
+    public function logout() {
+        if(isset($_SESSION) && $_SESSION[self::$sessionKey] == $this->userPropierties[self::$usernameField]) {
+            $_SESSION[self::$sessionKey] = ''; // seems that the use of 'unset($_SESSION[...]' is not a good practice, so we empty manually the session variable
+            session_destroy();
+        }
+    }
+    
+    public function isLogged() {
+        if(isset($_SESSION)) {
+            if(isset($_SESSION[self::$sessionKey])) {
+                return ($_SESSION[self::$sessionKey] == $this->userPropierties[self::$usernameField]);
+            }
+        }
+        
+        return false;
     }
 
     /* Getters & setters */
