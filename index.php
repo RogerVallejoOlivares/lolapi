@@ -26,16 +26,16 @@
          $pwd = $_POST['pwd'];
          
          $user = new User($email);
-         $login = $user->login($pwd);
+         //$login = $user->login($pwd);
          
-         if($login) {
+         /*if($login) {
              //@header('Location: '.$correctLoginPage);
              @header('Location: tastafrsaf.php');
              exit();
          } else {
              echo 'incorrect account or password';
              exit();
-         }
+         }*/
     }
 
     if(isset($_POST['signUp'])) {

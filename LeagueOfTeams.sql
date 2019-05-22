@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.6.6deb4
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:8889
--- Tiempo de generación: 20-05-2019 a las 07:55:20
--- Versión del servidor: 5.7.25
--- Versión de PHP: 7.3.1
+-- Servidor: localhost:3306
+-- Tiempo de generación: 23-05-2019 a las 00:19:31
+-- Versión del servidor: 10.1.38-MariaDB-0+deb9u1
+-- Versión de PHP: 7.0.33-0+deb9u3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `LeagueOfTeams`
+-- Base de datos: `lolapi`
 --
 
 -- --------------------------------------------------------
@@ -71,8 +71,8 @@ CREATE TABLE `Manager` (
   `password` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `phone` varchar(40) COLLATE utf8_spanish_ci DEFAULT NULL,
   `birthDay` date DEFAULT NULL,
-  `gold` int(11) DEFAULT NULL,
-  `elo` int(11) DEFAULT NULL
+  `gold` int(11) DEFAULT '0',
+  `elo` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -172,37 +172,31 @@ ALTER TABLE `Player`
 --
 ALTER TABLE `CardPlayer`
   MODIFY `idCard` tinyint(4) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `Equipamiento`
 --
 ALTER TABLE `Equipamiento`
   MODIFY `idPowerUp` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `League`
 --
 ALTER TABLE `League`
   MODIFY `leagueid` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `Manager`
 --
 ALTER TABLE `Manager`
-  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `Match`
 --
 ALTER TABLE `Match`
   MODIFY `idGame` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT de la tabla `Player`
 --
 ALTER TABLE `Player`
   MODIFY `idPlayer` mediumint(9) NOT NULL AUTO_INCREMENT;
-
 --
 -- Restricciones para tablas volcadas
 --
