@@ -26,7 +26,7 @@
     
 ?>
 
-
+<a id="btnSearchGame" class="boxShadowBlue" >Search Game</a>
 
 <?php
 
