@@ -51,6 +51,8 @@
     <!-- Custom scripts for this template -->
     <script src="js/agency.min.js"></script>
 
+    <script src="js/jQfunctions.js"></script>
+
 </body>
 
 </html>

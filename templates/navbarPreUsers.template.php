@@ -24,7 +24,7 @@
                     <a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#logIn">Log In</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#signUp">Sign up</a>
+                    <a id="navButtonSign" class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#signUp">Sign up</a>
                 </li>
             </ul>
         </div>

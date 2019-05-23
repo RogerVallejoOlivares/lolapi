@@ -18,7 +18,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'index') { echo 'borderBot'; } ?>" href="#Profile">Profile</a>
+                        <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'main') { echo 'borderBot'; } ?>" href="mainPage.php">Main</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'team') { echo 'borderBot'; } ?>" href="#Team">Team</a>
@@ -27,7 +27,7 @@
                         <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'market') { echo 'borderBot'; } ?>" href="#Shop">Shop</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'profile') { echo 'borderBot'; } ?>" href="#Settings">Settings</a>
+                        <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'settings') { echo 'borderBot'; } ?>" href="settings.php">Settings</a>
                     </li>
                     
                     <li class="nav-item">
