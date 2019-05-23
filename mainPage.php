@@ -12,13 +12,9 @@
 
     $returnUrl = 'index.php';
     $currentUser = User::getCurrentUser();
-    if(!$currentUser) {
+
+    if($currentUser === FALSE || ($currentUser !== FALSE && !$currentUser->isLogged())) {
         @header('Location: '.$returnUrl);     
-        exit();
-    }
-    
-    if(!$currentUser->isLogged()) {
-        header('Location: '.$returnUrl);
         exit();
     }
 

@@ -38,7 +38,7 @@
     
     print("[+] user registered? ".($newUser ? "YES" : "NO").PHP_EOL);
     print("[+] new user exists? ".(User::exists($newUserData['name']) ? "YES" : "NO").PHP_EOL);
-    print("[+] deleted new user? ".($newUser != false && $newUser->delete() ? "YES" : "NO").PHP_EOL);
+    print("[+] deleted new user? ".($newUser !== FALSE && $newUser->delete() ? "YES" : "NO").PHP_EOL);
     print("[+] new user exists after delete? ".(User::exists($newUserData['name']) ? "YES" : "NO").PHP_EOL);    
     
     print("[#] user session test".PHP_EOL);
@@ -53,11 +53,11 @@
         $newUserData['birthDay']
     );
      
-    print("[+] new user is logged before login? ".($newUser != false && $newUser->isLogged() ? "YES" : "NO").PHP_EOL);
-    print("[+] new user login? ".(isset($newUser) && $newUser->login() ? "YES" : "NO").PHP_EOL);
-    print("[+] new user is logged after login? ".($newUser != false && $newUser->isLogged() ? "YES" : "NO").PHP_EOL);
+    print("[+] new user is logged before login? ".($newUser !== FALSE && $newUser->isLogged() ? "YES" : "NO").PHP_EOL);
+    print("[+] new user login? ".(isset($newUser) && $newUser->login($newUserData['password']) ? "YES" : "NO").PHP_EOL);
+    print("[+] new user is logged after login? ".($newUser !== FALSE && $newUser->isLogged() ? "YES" : "NO").PHP_EOL);
     print("[+] new user logout? ".(isset($newUser) && $newUser->logout() ? "YES" : "NO").PHP_EOL);
-    print("[+] new user is logged after logout? ".($newUser != false && $newUser->isLogged() ? "YES" : "NO").PHP_EOL);
+    print("[+] new user is logged after logout? ".($newUser !== FALSE && $newUser->isLogged() ? "YES" : "NO").PHP_EOL);
     print("[+] new user deleted? ".($newUser != false && $newUser->delete() ? "YES" : "NO").PHP_EOL);
      
 ?>

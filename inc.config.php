@@ -27,7 +27,8 @@
     /** Database setup */
     $db = new MysqliDb (
         Array (
-            'host' => 'erikpi.ddns.net',
+            //'host' => 'erikpi.ddns.net',
+            'host' => '127.0.0.1',
             'username' => 'pi', 
             'password' => 'destroyer23',
             'db'=> 'lolapi',

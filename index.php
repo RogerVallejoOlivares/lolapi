@@ -16,26 +16,41 @@
     $_SESSION['current_page'] = 'index';
 
     include_once('templates/imports.template.php');
-    include_once('templates/navbarPreUsers.template.php');
+    
+    $currentUser = User::getCurrentUser();
+    if($currentUser !== FALSE && $currentUser->isLogged()) {
+        include_once('templates/navbarUsers.template.php');        
+    } else {
+        include_once('templates/navbarPreUsers.template.php');
+    }
+    
     include_once('templates/header.template.php');
     
     $correctLoginPage = 'mainPage.php';
 
+    if(isset($_GET['logout'])) {
+        echo 'logout';
+        if($currentUser !== FALSE) {
+            $currentUser->logout();
+            header('Location: index.php');
+        }
+    }
+    
     if(isset($_POST['logIn'])){
          $email = $_POST['email'];
          $pwd = $_POST['pwd'];
          
          $user = new User($email);
-         //$login = $user->login($pwd);
+         $login = $user->login($pwd);
          
-         /*if($login) {
-             //@header('Location: '.$correctLoginPage);
-             @header('Location: tastafrsaf.php');
+         if($login) {
+             @header('Location: '.$correctLoginPage);
+             echo 'logging...';
              exit();
          } else {
              echo 'incorrect account or password';
              exit();
-         }*/
+         }
     }
 
     if(isset($_POST['signUp'])) {
@@ -63,7 +78,7 @@
             }
             
             $user = User::register($name, $lastName, $email, $pwd, $phone, $birthDay);
-            if(!$user) {
+            if($user !== FALSE) {
                 echo 'error creating user';
                 exit();
             }
