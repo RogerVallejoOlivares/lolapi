@@ -96,12 +96,13 @@ class User {
 
         if (isset($r) && $this->db->count > 0) {
             $this->userPropierties['id'] = $r['idManager'];
+            $this->userPropierties['name'] = $r['name'];
             $this->userPropierties['lastname'] = $r['lastname'];
             $this->userPropierties['email'] = $r['email'];
             $this->userPropierties['password'] = $r['password'];
             $this->userPropierties['phone'] = $r['phone'];
-            $this->userPropierties['phone'] = $r['phone'];
-            $this->userPropierties['phone'] = $r['phone'];
+            $this->userPropierties['birthDay'] = $r['birthDay'];
+            $this->userPropierties['gold'] = $r['gold'];
             $this->userPropierties['elo'] = $r['elo'];
         }
 
@@ -109,8 +110,16 @@ class User {
     }
 
     public function save() {
-        $this->db->where(self::$usernameField, $this->userPropierties[self::$usernameField]);
-        $r = $this->db->update(self::$tableName, $this->userPropierties);
+        $data = $this->userPropierties;
+        unset($data['id']); // do not modify the id ;)
+        
+        $this->db->where(self::$usernameField, $data[self::$usernameField]);
+        $r = $this->db->update(self::$tableName, $data);
+
+        if($r) {
+            $this->load();
+        }
+        
         return ($r);
     }
 
@@ -126,26 +135,25 @@ class User {
     }
 
     public function login($password) {
-        print('[user.login] Debug1'.PHP_EOL);
         if (User::exists($this->userPropierties[self::$usernameField]) === FALSE) {
             return FALSE;
         }
-print('[user.login] Debug2'.PHP_EOL);
+
         if (!isset($_SESSION)) {
             @session_start();
         }
-print('[user.login] Debug3'.PHP_EOL);
+
         if (!isset($_SESSION)) {
             // session cannot be created
             return FALSE;
         }
-print('[user.login] Debug3'.PHP_EOL);
+
         if (self::hashPassword($password) != $this->getPassword()) {
             return FALSE;
         }
-print('[user.login] Debug4'.PHP_EOL);
+
         $_SESSION[self::$sessionKey] = $this->userPropierties[self::$usernameField];
-print('[user.login] Debug5'.PHP_EOL);
+
         return ($this->isLogged());
     }
 
@@ -172,14 +180,6 @@ print('[user.login] Debug5'.PHP_EOL);
 
     /* Getters & setters */
 
-    public function getName($reload = FALSE) {
-        return ($this->userName);
-    }
-
-    public function setName($name) {
-        $this->userName = $name;
-    }
-
     private function getProperty($key, $reload = FALSE) {
         if (!isset($this->userPropierties[self::$usernameField])) {
             return FALSE;
@@ -201,6 +201,15 @@ print('[user.login] Debug5'.PHP_EOL);
 
     public function setPassword($property) {
         $this->userPropierties['password'] = self::hashPassword($property);
+    }
+    
+    public function getName($reload = FALSE) {
+        $property = $this->getProperty('name', $reload);
+        return ($property);
+    }
+
+    public function setName($property) {
+        $this->userPropierties['name'] = $property;
     }
 
     public function getLastName($reload = FALSE) {
