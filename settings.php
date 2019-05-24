@@ -40,7 +40,7 @@ if (isset($_POST['modify'])) {
         $currentUser->setPhone($phone);
         $currentUser->setBirthday($birthDay);
 
-        if (isset($pwd) && isset($pwd2)) {
+        if ((isset($pwd) && isset($pwd2)) && (!empty($pwd) && !empty($pwd2))) {
             if ($pwd != $pwd2) {
                 $messageResponse = 'provided passwords dont match';
             } else {
