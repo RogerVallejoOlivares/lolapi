@@ -27,6 +27,7 @@
     include_once('templates/header.template.php');
     
     $correctLoginPage = 'mainPage.php';
+    $messageResponse = "";
 
     if(isset($_GET['logout'])) {
         echo 'logout';
@@ -46,8 +47,7 @@
          if($login) {
              @header('Location: '.$correctLoginPage);
          } else {
-             echo 'incorrect account or password';
-
+             $messageResponse = 'incorrect mail or password';
          }
     }
 
@@ -66,23 +66,20 @@
             isset($pwd2)
         ) {
             if($pwd != $pwd2) {
-                echo 'provided passwords dont match';
+                $messageResponse = 'provided passwords dont match';
 
             }elseif (User::exists($email)) {
-                echo 'the user already exists';
+                $messageResponse = 'the user already exists';
 
             }else{
                 $user = User::register($name, $lastName, $email, $pwd, $phone, $birthDay);
                 if($user === FALSE) {
-                    echo 'error creating user';
+                    $messageResponse = 'error creating user';
                 }else{
-                    echo 'user registered';
+                    $messageResponse = 'user registered';
                 }
             }
 
-            //header('Location: mainPage.php');
-            //echo 'user registered';
-            //exit();
         }
     }
     
@@ -91,34 +88,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading text-uppercase">Services</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h2 class="section-heading text-uppercase">League of Teams</h2>
+                    <h3 class="section-subheading text-muted">Become the greatest manager</h3>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-            <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
-          </span>
-                    <h4 class="service-heading">E-Commerce</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-                <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fas fa-circle fa-stack-2x text-primary"></i>
             <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
           </span>
-                    <h4 class="service-heading">Responsive Design</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    <h4 class="service-heading">Compete</h4>
+                    <p class="text-muted">Compete with others managers for gold and ELO, and reach the top to become the greatest manager.</p>
                 </div>
                 <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-            <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
+            <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
           </span>
-                    <h4 class="service-heading">Web Security</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    <h4 class="service-heading">Market</h4>
+                    <p class="text-muted">Buy and sell players or equipment to improve your team and make it powerfull</p>
+                </div>
+                <div class="col-md-4">
+          <span class="fa-stack fa-4x">
+            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+            <i class="fas fa-chalkboard-teacher fa-stack-1x fa-inverse"></i>
+          </span>
+                    <h4 class="service-heading">Lead</h4>
+                    <p class="text-muted">Lead your team, organize their positions and take decisions to win games</p>
                 </div>
             </div>
         </div>
@@ -184,7 +181,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="dateSign">date of birth</label>
-                                <input type="date" class="form-control" id="dateSign" name="date">
+                                <input type="date" class="form-control" id="dateSign" name="date" placeholder="dd/mm/yyyy">
                             </div>
                             <div class="form-group">
                                 <label for="pwdSign">Password</label>
@@ -208,6 +205,12 @@
     </div>
 
 <?php
+
+    if(isset($_POST['logIn']) || isset($_POST['signUp'])) {
+        echo '<script language="javascript">';
+        echo 'alert("' . $messageResponse . '")';
+        echo '</script>';
+    }
 
     include_once('templates/footer.template.php');
 

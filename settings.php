@@ -14,6 +14,7 @@ require(CWD . 'includes/inc.user.php');
 
 $returnUrl = 'index.php';
 $currentUser = User::getCurrentUser();
+$messageResponse = "";
 
 if ($currentUser === FALSE || ($currentUser !== FALSE && !$currentUser->isLogged())) {
     @header('Location: ' . $returnUrl);
@@ -41,7 +42,7 @@ if (isset($_POST['modify'])) {
 
         if (isset($pwd) && isset($pwd2)) {
             if ($pwd != $pwd2) {
-                echo 'provided passwords dont match';
+                $messageResponse = 'provided passwords dont match';
             } else {
                 $currentUser->setPassword($pwd);
             }
@@ -49,7 +50,7 @@ if (isset($_POST['modify'])) {
 
         $currentUser->save();
     } else {
-        echo 'Please, fill all fields';
+        $messageResponse = 'Please, fill all fields';
     }
 
 //header('Location: mainPage.php');
@@ -77,7 +78,7 @@ if (isset($_POST['modify'])) {
             </div>
             <div class="form-row-total">
                 <div class="form-row">
-                    <input type="datetime-local" class="input-text" id="dateSign" name="date" value="<?= date('Y-m-d', strtotime($currentUser->getBirthday())) ?>">
+                    <input type="date" class="input-text" id="dateSign" name="date" value="<?= date('Y-m-d', strtotime($currentUser->getBirthday())) ?>">
                 </div>
                 <div class="form-row">
                     <input type="text" id="phoneSing" class="input-text"  name="phone" value="<?= $currentUser->getPhone() ?>">
@@ -101,5 +102,12 @@ if (isset($_POST['modify'])) {
 </div>
 
 <?php
+
+if(isset($_POST['modify'])) {
+    echo '<script language="javascript">';
+    echo 'alert("' . $messageResponse . '")';
+    echo '</script>';
+}
+
 include_once('templates/footer.template.php');
 ?>
