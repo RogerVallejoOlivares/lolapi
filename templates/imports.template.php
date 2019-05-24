@@ -43,4 +43,6 @@
         <!-- Custom styles for this template -->
         <link href="css/agency.css" rel="stylesheet">
 
+        <script src="js/jQfunctions.js"></script>
+
     </head>

@@ -1,4 +1,4 @@
-$(window).on('load', function(){
+(function($) {
 
     $('#registerUser').submit(function (e) {
         if(isEmail() && passwordsMatch()){
@@ -16,7 +16,7 @@ $(window).on('load', function(){
         const mail = document.getElementById('emailSign');
         const regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-        check = regex.test(mail.value);
+        var check = regex.test(mail.value);
 
         if(!check)  mail.classList.add('wrongValue');
         else        mail.classList.remove('wrongValue');
@@ -25,10 +25,10 @@ $(window).on('load', function(){
     }
 
     function passwordsMatch(){
-        pwd = document.getElementById('pwdSign');
-        pwd2 = document.getElementById('pwd2Sign');
+        const pwd = document.getElementById('pwdSign');
+        const pwd2 = document.getElementById('pwd2Sign');
 
-        check = pwd.value === pwd2.value;
+        var check = pwd.value === pwd2.value;
 
         if(!check){
             pwd.classList.add('wrongValue');
