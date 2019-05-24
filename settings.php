@@ -49,6 +49,7 @@ if (isset($_POST['modify'])) {
         }
 
         $currentUser->save();
+        $messageResponse = 'Settings were modified successfully!';
     } else {
         $messageResponse = 'Please, fill all fields';
     }
