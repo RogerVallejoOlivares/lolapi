@@ -1,20 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb4
+-- version 4.6.6
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 23-05-2019 a las 00:19:31
--- Versión del servidor: 10.1.38-MariaDB-0+deb9u1
--- Versión de PHP: 7.0.33-0+deb9u3
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 25-05-2019 a las 21:23:18
+-- Versión del servidor: 5.6.35
+-- Versión de PHP: 7.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `lolapi`
@@ -23,10 +17,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `CardPlayer`
+-- Estructura de tabla para la tabla `cardplayer`
 --
 
-CREATE TABLE `CardPlayer` (
+CREATE TABLE `cardplayer` (
   `idCard` tinyint(4) NOT NULL,
   `idPlayer` tinyint(4) NOT NULL,
   `dateCreation` date NOT NULL,
@@ -36,10 +30,10 @@ CREATE TABLE `CardPlayer` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Equipamiento`
+-- Estructura de tabla para la tabla `equipamiento`
 --
 
-CREATE TABLE `Equipamiento` (
+CREATE TABLE `equipamiento` (
   `idPowerUp` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `type` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
@@ -49,10 +43,10 @@ CREATE TABLE `Equipamiento` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `League`
+-- Estructura de tabla para la tabla `league`
 --
 
-CREATE TABLE `League` (
+CREATE TABLE `league` (
   `leagueid` int(11) NOT NULL,
   `name` varchar(55) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -60,10 +54,10 @@ CREATE TABLE `League` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Manager`
+-- Estructura de tabla para la tabla `manager`
 --
 
-CREATE TABLE `Manager` (
+CREATE TABLE `manager` (
   `idManager` int(11) NOT NULL,
   `name` varchar(70) COLLATE utf8_spanish_ci NOT NULL,
   `lastname` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -78,10 +72,10 @@ CREATE TABLE `Manager` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Match`
+-- Estructura de tabla para la tabla `match`
 --
 
-CREATE TABLE `Match` (
+CREATE TABLE `match` (
   `idGame` int(11) NOT NULL,
   `idManager1` int(11) NOT NULL,
   `idManager2` int(11) NOT NULL,
@@ -92,27 +86,27 @@ CREATE TABLE `Match` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Player`
+-- Estructura de tabla para la tabla `player`
 --
 
-CREATE TABLE `Player` (
+CREATE TABLE `player` (
   `idPlayer` mediumint(9) NOT NULL,
-  `accountId` int(11) NOT NULL,
-  `summonerId` int(11) NOT NULL,
+  `accountId` text COLLATE utf8_spanish_ci NOT NULL,
+  `summonerId` text COLLATE utf8_spanish_ci NOT NULL,
   `KDA` float NOT NULL,
   `numMatches` smallint(6) NOT NULL,
   `name` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `leagueId` int(11) NOT NULL,
-  `leagueRank` int(11) NOT NULL
+  `leagueRank` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `TeamPlayer`
+-- Estructura de tabla para la tabla `teamplayer`
 --
 
-CREATE TABLE `TeamPlayer` (
+CREATE TABLE `teamplayer` (
   `idCard` int(11) NOT NULL,
   `idManager` smallint(6) NOT NULL,
   `aligned` tinyint(1) NOT NULL,
@@ -124,42 +118,42 @@ CREATE TABLE `TeamPlayer` (
 --
 
 --
--- Indices de la tabla `CardPlayer`
+-- Indices de la tabla `cardplayer`
 --
-ALTER TABLE `CardPlayer`
+ALTER TABLE `cardplayer`
   ADD PRIMARY KEY (`idCard`);
 
 --
--- Indices de la tabla `Equipamiento`
+-- Indices de la tabla `equipamiento`
 --
-ALTER TABLE `Equipamiento`
+ALTER TABLE `equipamiento`
   ADD PRIMARY KEY (`idPowerUp`),
   ADD KEY `idManager` (`idManager`);
 
 --
--- Indices de la tabla `League`
+-- Indices de la tabla `league`
 --
-ALTER TABLE `League`
+ALTER TABLE `league`
   ADD PRIMARY KEY (`leagueid`);
 
 --
--- Indices de la tabla `Manager`
+-- Indices de la tabla `manager`
 --
-ALTER TABLE `Manager`
+ALTER TABLE `manager`
   ADD PRIMARY KEY (`idManager`);
 
 --
--- Indices de la tabla `Match`
+-- Indices de la tabla `match`
 --
-ALTER TABLE `Match`
+ALTER TABLE `match`
   ADD PRIMARY KEY (`idGame`),
   ADD KEY `idManager1` (`idManager1`),
   ADD KEY `idManager2` (`idManager2`);
 
 --
--- Indices de la tabla `Player`
+-- Indices de la tabla `player`
 --
-ALTER TABLE `Player`
+ALTER TABLE `player`
   ADD PRIMARY KEY (`idPlayer`),
   ADD KEY `leagueId` (`leagueId`);
 
@@ -168,58 +162,54 @@ ALTER TABLE `Player`
 --
 
 --
--- AUTO_INCREMENT de la tabla `CardPlayer`
+-- AUTO_INCREMENT de la tabla `cardplayer`
 --
-ALTER TABLE `CardPlayer`
+ALTER TABLE `cardplayer`
   MODIFY `idCard` tinyint(4) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `Equipamiento`
+-- AUTO_INCREMENT de la tabla `equipamiento`
 --
-ALTER TABLE `Equipamiento`
+ALTER TABLE `equipamiento`
   MODIFY `idPowerUp` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `League`
+-- AUTO_INCREMENT de la tabla `league`
 --
-ALTER TABLE `League`
-  MODIFY `leagueid` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `league`
+  MODIFY `leagueid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
--- AUTO_INCREMENT de la tabla `Manager`
+-- AUTO_INCREMENT de la tabla `manager`
 --
-ALTER TABLE `Manager`
-  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `manager`
+  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de la tabla `Match`
+-- AUTO_INCREMENT de la tabla `match`
 --
-ALTER TABLE `Match`
+ALTER TABLE `match`
   MODIFY `idGame` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `Player`
+-- AUTO_INCREMENT de la tabla `player`
 --
-ALTER TABLE `Player`
-  MODIFY `idPlayer` mediumint(9) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `player`
+  MODIFY `idPlayer` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `Equipamiento`
+-- Filtros para la tabla `equipamiento`
 --
-ALTER TABLE `Equipamiento`
-  ADD CONSTRAINT `equipamiento_ibfk_1` FOREIGN KEY (`idManager`) REFERENCES `Manager` (`idManager`);
+ALTER TABLE `equipamiento`
+  ADD CONSTRAINT `equipamiento_ibfk_1` FOREIGN KEY (`idManager`) REFERENCES `manager` (`idManager`);
 
 --
--- Filtros para la tabla `Match`
+-- Filtros para la tabla `match`
 --
-ALTER TABLE `Match`
-  ADD CONSTRAINT `match_ibfk_1` FOREIGN KEY (`idManager1`) REFERENCES `Manager` (`idManager`),
-  ADD CONSTRAINT `match_ibfk_2` FOREIGN KEY (`idManager2`) REFERENCES `Manager` (`idManager`);
+ALTER TABLE `match`
+  ADD CONSTRAINT `match_ibfk_1` FOREIGN KEY (`idManager1`) REFERENCES `manager` (`idManager`),
+  ADD CONSTRAINT `match_ibfk_2` FOREIGN KEY (`idManager2`) REFERENCES `manager` (`idManager`);
 
 --
--- Filtros para la tabla `Player`
+-- Filtros para la tabla `player`
 --
-ALTER TABLE `Player`
-  ADD CONSTRAINT `player_ibfk_1` FOREIGN KEY (`leagueId`) REFERENCES `League` (`leagueid`);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+ALTER TABLE `player`
+  ADD CONSTRAINT `player_ibfk_1` FOREIGN KEY (`leagueId`) REFERENCES `league` (`leagueid`);
