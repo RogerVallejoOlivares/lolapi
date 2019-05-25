@@ -6,7 +6,7 @@ from collections import Counter
 import sys, json
 
 # constants
-API_KEY = 'RGAPI-0d273916-77fd-4673-8af7-c93c604379dd'
+API_KEY = 'RGAPI-a66c7573-3558-43f9-b8ad-87b9d260efe8'
 API_REGION = Region.europe_west
 CURRENT_SEASON = Season.season_8
 QUEUES = {Queue.ranked_solo_fives}
@@ -78,25 +78,36 @@ def save_match(participant, match):
 
 def get_matches_from_summoner(summoner):
     match_history = summoner.match_history#cass.get_match_history(summoner=summoner, queues={Queue.ranked_solo_fives})
-    match_history(seasons={CURRENT_SEASON}, queues=QUEUES)
+    match_history(seasons={CURRENT_SEASON}, queues=QUEUES, end_index=COMPUTABLE_MATCH_COUNT)
 
     match_count = 0
     for m in match_history:
-        for p in m.participants:
-            match_count = match_count + 1
-            save_match(p, m)
+        p = m.participants[summoner]
+        match_count = match_count + 1
+        save_match(p, m)
 
         if (match_count == COMPUTABLE_MATCH_COUNT):
             break
 
 # main
 def main():
-    summoner = Summoner(name='matalords', region=API_REGION)
-    get_matches_from_summoner(summoner)
+    for p in player_history:
+        for q in QUEUES:
+            queue_name = str(q.value)
+            if not queue_name in player_history[p]:
+                player_history[p][queue_name] = {}
+
+            player_match_count = len(player_history[p][queue_name])
+            #print('player %s has %d matches in queue %s' % (p, player_match_count, queue_name))
+            if player_match_count < COMPUTABLE_MATCH_COUNT:
+                summoner = Summoner(name=p, region=API_REGION)
+                get_matches_from_summoner(summoner)
+
+
 
 if __name__ == "__main__":
     load_players()
     print('there are %d players' % (len(player_history)))
 
     main()
-    save_players()
+    #save_players()
