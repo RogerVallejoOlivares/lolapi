@@ -9,6 +9,7 @@
     
     include('inc.config.php');
     require(CWD.'includes/inc.user.php');
+    require(CWD.'includes/inc.match.php');
 
     $returnUrl = 'index.php';
     $currentUser = User::getCurrentUser();
@@ -29,17 +30,17 @@
         <div class="container">
             <div class="row" id="navUserMainPage">
                 <div class="col-lg-3 col-3">
-                    <h3 class="text-warning"> 1234
+                    <h3 class="text-warning"> <?= $currentUser->getGold() ?>
                         <span class="fa-stack">
                         <i class="fas fa-coins fa-stack-1x text-warning"></i>
                     </span>
                     </h3>
                 </div>
                 <div class="col-lg-6 col-6 text-center">
-                    <h2 class="section-heading text-uppercase">Matalords</h2>
+                    <h2 class="section-heading text-uppercase"><?= $currentUser->getName() ?></h2>
                 </div>
                 <div class="col-lg-3 col-3">
-                    <h3 class="text-lot"> 1234
+                    <h3 class="text-lot"> <?= $currentUser->getElo() ?>
                         <span class="fa-stack">
                         <i class="fas fa-trophy fa-stack-1x fa-inverse text-lot"></i>
                     </span>
@@ -72,6 +73,19 @@
                                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
                                             <i class="fas fa-chess fa-stack-1x fa-inverse"></i>
                                         </a>
+                                        <?php
+                                            $match = Match::search($currentUser);
+                                            if($match === FALSE) {
+                                                echo 'There are no enemies to fight!';
+                                            } else {
+                                                $enemy_user = $match->getEnemyUser();
+                                                if($enemy_user === FALSE) {
+                                                    echo 'An unexpected error ocurred while searching for a fight.';
+                                                } else {
+                                                    echo 'Your enemy is '.$enemy_user->getEmail();
+                                                }
+                                            }
+                                        ?>
                                     </td>
                                 </tr>
                                 </tbody>

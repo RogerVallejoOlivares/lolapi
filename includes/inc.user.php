@@ -192,6 +192,15 @@ class User {
         $this->load();
         $this->getProperty($key, FALSE);
     }
+    
+    public function getId($reload = FALSE) {
+        $property = $this->getProperty('id', $reload);
+        return ($property);
+    }
+
+    public function setId($property) {
+        $this->userPropierties['id'] = $property;
+    }
 
     public function getPassword($reload = FALSE) {
         $property = $this->getProperty('password', $reload);
