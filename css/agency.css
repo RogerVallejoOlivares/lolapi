@@ -979,8 +979,37 @@ input:-moz-placeholder { /* Firefox 18- */
     margin-left: 12px;
 }
 
-
 .tablePlayers{
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    box-shadow: 5px 5px 10px #0f0f0f;
 }
+
+/* match Styles */
+/*filter: opacity(.6);*/
+
+.cardTittle{
+    background-color: rgb(3, 169, 244) !important;
+    color: white !important;
+}
+
+#cardMap{
+    background-image: url("../img/matchBgEdited3.jpg");
+    background-size: cover;
+    color: white;
+    min-height: 300px;
+}
+
+.nameMatch{
+    margin-bottom: 120px;
+    margin-top: 80px;
+}
+
+.lowMarginBtm{
+    margin-bottom: 30px;
+}
+
+.midMarginBtm{
+    margin-bottom: 60px;
+}
+
