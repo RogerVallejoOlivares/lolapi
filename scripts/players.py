@@ -143,6 +143,7 @@ def hours_elapsed_from_now(d):
     return ((delta.days * 24) + (delta.seconds) / 3600)
 
 if __name__ == "__main__":
+    # victorcr, mapilol, NashiraK, inferno0529, Amazing Onichan 
     #summoner = Summoner(name='matalords', region=API_REGION)
     #get_matches_from_summoner(summoner)
 
