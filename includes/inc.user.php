@@ -1,13 +1,14 @@
 <?php
 
-require(__DIR__.'/../inc.config.php');
+require(__DIR__ . '/../inc.config.php');
 
 class User {
 
     private static $tableName = 'Manager'; // database table where users are stored
     private static $usernameField = 'email'; // database column with login username
     private static $sessionKey = 'name'; // key used in session variable to know if a user is logged in
-    private $db;
+    public static $db;
+    private $exists;
     private $userPropierties = Array(
         'id' => '',
         'name' => '',
@@ -22,18 +23,19 @@ class User {
 
     function __construct($name) {
         $this->userPropierties[self::$usernameField] = $name;
-        $this->db = MysqliDb::getInstance();
 
-        $this->load();
+        $this->exists = false;
+        if($this->load() !== FALSE) {
+            $this->exists = true;
+        }
 
         return $this;
     }
 
     /** Static functions * */
-    public static function exists($name) {
-        $db = MysqliDb::getInstance();
-        $db->where(self::$usernameField, $name);
-        $count = $db->getValue(self::$tableName, 'count(*)');
+    public static function userExists($name) {
+        self::$db->where(self::$usernameField, $name);
+        $count = self::$db->getValue(self::$tableName, 'count(*)');
         if ($count !== null && is_int($count)) {
             return ($count > 0);
         }
@@ -52,7 +54,7 @@ class User {
             return FALSE;
         }
 
-        if (User::exists($name)) {
+        if (User::userExists($name)) {
             return FALSE;
         }
 
@@ -65,10 +67,9 @@ class User {
             'birthDay' => $birthDay
         );
 
-        $db = MysqliDb::getInstance();
-        $db->insert(self::$tableName, $data);
+        self::$db->insert(self::$tableName, $data);
 
-        if (User::exists($data[self::$usernameField]) === FALSE) {
+        if (User::userExists($data[self::$usernameField]) === FALSE) {
             return FALSE;
         }
 
@@ -89,12 +90,45 @@ class User {
         return ($user);
     }
 
-    /** Class functions * */
-    public function load() {
-        $this->db->where(self::$usernameField, $this->userPropierties[self::$usernameField]);
-        $r = $this->db->getOne(self::$tableName);
+    public static function getUserById($id) {
+        if (!isset($id)) {
+            return FALSE;
+        }
 
-        if (isset($r) && $this->db->count > 0) {
+        $userId = (int) $id; // this is to prevent sql injection
+        if ($userId <= 0) {
+            return FALSE;
+        }
+
+        self::$db->where('idManager', $userId);
+        $r = self::$db->getOne(self::$tableName);
+        if (isset($r) && self::$db->count > 0) {
+            $userName = $r[self::$usernameField];
+            if (!isset($userName) || empty($userName)) {
+                return FALSE;
+            }
+
+            $user = new User($userName);
+            return $user;
+        }
+
+        return FALSE;
+    }
+
+    public static function compare($user1, $user2) {
+        return ($user1->getId() == $user2->getId());
+    }
+    
+    /** Class functions * */
+    public function exists() {
+        return $this->exists;
+    }
+    
+    public function load() {
+        self::$db->where(self::$usernameField, $this->userPropierties[self::$usernameField]);
+        $r = self::$db->getOne(self::$tableName);
+
+        if (isset($r) && self::$db->count > 0) {
             $this->userPropierties['id'] = $r['idManager'];
             $this->userPropierties['name'] = $r['name'];
             $this->userPropierties['lastname'] = $r['lastname'];
@@ -104,7 +138,9 @@ class User {
             $this->userPropierties['birthDay'] = $r['birthDay'];
             $this->userPropierties['gold'] = $r['gold'];
             $this->userPropierties['elo'] = $r['elo'];
-        }
+        } else {
+            return FALSE;
+        }       
 
         return ($this->userPropierties);
     }
@@ -112,20 +148,24 @@ class User {
     public function save() {
         $data = $this->userPropierties;
         unset($data['id']); // do not modify the id ;)
-        
-        $this->db->where(self::$usernameField, $data[self::$usernameField]);
-        $r = $this->db->update(self::$tableName, $data);
 
-        if($r) {
+        self::$db->where(self::$usernameField, $data[self::$usernameField]);
+        $r = self::$db->update(self::$tableName, $data);
+
+        if ($r) {
             $this->load();
         }
-        
+
         return ($r);
     }
 
     public function delete() {
-        $this->db->where(self::$usernameField, $this->userPropierties[self::$usernameField]);
-        $r = $this->db->delete(self::$tableName);
+        self::$db->where(self::$usernameField, $this->userPropierties[self::$usernameField]);
+        $r = self::$db->delete(self::$tableName);
+        if($r) {
+            $this->exists = false;
+        }
+        
         return ($r);
     }
 
@@ -135,7 +175,7 @@ class User {
     }
 
     public function login($password) {
-        if (User::exists($this->userPropierties[self::$usernameField]) === FALSE) {
+        if (User::userExists($this->userPropierties[self::$usernameField]) === FALSE) {
             return FALSE;
         }
 
@@ -178,6 +218,22 @@ class User {
         return FALSE;
     }
 
+    public function getCards() {
+        $cardList = Array();
+        self::$db->where('idManager', $this->getId());
+        $cards = self::$db->get('cardplayer', null, 'idCard');
+        foreach ($cards as $card) {
+            if(!isset($card['idCard'])) {
+                continue;
+            }
+            
+            $p = new Card($card['idCard']);
+            array_push($cardList, $p);
+        }
+        
+        return $cardList;
+    }
+    
     /* Getters & setters */
 
     private function getProperty($key, $reload = FALSE) {
@@ -192,7 +248,7 @@ class User {
         $this->load();
         $this->getProperty($key, FALSE);
     }
-    
+
     public function getId($reload = FALSE) {
         $property = $this->getProperty('id', $reload);
         return ($property);
@@ -211,7 +267,7 @@ class User {
     public function setPassword($property) {
         $this->userPropierties['password'] = self::hashPassword($property);
     }
-    
+
     public function getName($reload = FALSE) {
         $property = $this->getProperty('name', $reload);
         return ($property);
@@ -276,5 +332,10 @@ class User {
     }
 
 }
+
+if (!isset(User::$db)) {
+    User::$db = MysqliDb::getInstance(); // this is a little hack to initialize a static variable
+}
+
 ?>
 

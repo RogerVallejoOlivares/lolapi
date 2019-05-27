@@ -68,7 +68,7 @@
             if($pwd != $pwd2) {
                 $messageResponse = 'provided passwords dont match';
 
-            }elseif (User::exists($email)) {
+            }elseif (User::userExists($email)) {
                 $messageResponse = 'the user already exists';
 
             }else{

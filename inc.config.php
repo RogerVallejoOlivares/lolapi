@@ -8,7 +8,7 @@
     
     /** Global variables **/
     @define('CWD', __DIR__.'/');
-
+    
     /** Riot API setup */
     use RiotAPI\LeagueAPI\LeagueAPI;
     use RiotAPI\LeagueAPI\Definitions\Region;

@@ -25,7 +25,7 @@ class Match {
      
         if($result !== FALSE) {
             $enemy_user_name = $result['email'];
-            if(User::exists($enemy_user_name)) {
+            if(User::userExists($enemy_user_name)) {
                 $enemy_user = new User($enemy_user_name);
                 
                 return $enemy_user;

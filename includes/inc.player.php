@@ -70,12 +70,18 @@ class Player {
         
         return FALSE;
     } 
-    
+        
     public function getValue() {
         // this is the simple formula to know the 'power' of a player
-        // will be used in fights
+        // will be used in fights       
         
         return ($this->kda + $this->leagueDivisionNumber + $this->leagueTierId);
+    }
+    
+    public function getPrice() {
+        // this is a simple formula to know the price of a player
+        
+        return round($this->getValue() * 10);
     }
 
     public function getId() {

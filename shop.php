@@ -9,6 +9,7 @@ if(!isset($_SESSION)) {
 
 include('inc.config.php');
 require(CWD.'includes/inc.user.php');
+require(CWD.'includes/inc.card.php');
 
 $returnUrl = 'index.php';
 $currentUser = User::getCurrentUser();
@@ -22,6 +23,16 @@ $_SESSION['current_page'] = 'shop';
 
 include_once('templates/imports.template.php');
 include_once('templates/navbarUsers.template.php');
+
+if(isset($_POST['buyPlayer'])) {
+    $cardId = (int) $_POST['cardId'];
+    
+    if(!isset($cardId)) {
+        exit();
+    }
+    
+    
+}
 
 ?>
     <section class="formSettings">
@@ -51,27 +62,35 @@ include_once('templates/navbarUsers.template.php');
                                 <div class="col-12">
                                     <table class="table table-hover lowMarginTop lowMarginBtm">
                                         <thead>
-                                        <th></th>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Value</th>
-                                        <th>Price</th>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Value</th>
+                                            <th>Price</th>
+                                            <th>User</th>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td><button class="btn btn-primary">Buy</button></td>
-                                            <td>player1</td>
-                                            <td>Top</td>
-                                            <td>2.4</td>
-                                            <td>120</td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-primary">Buy</button></td>
-                                            <td>player1</td>
-                                            <td>supplier</td>
-                                            <td>3.5</td>
-                                            <td>200</td>
-                                        </tr>
+                                        <?php
+                                            $cards = Card::getAllCards();
+                                            foreach($cards as $card) {
+                                                if(User::compare($currentUser, $card->getUser())) {
+                                                    continue;
+                                                }
+                                                
+                                                echo '
+                                                <tr>
+                                                    <form method="POST">
+                                                        <input type="hidden" name="cardId" value="'.$card->getId().'"/>
+                                                        <td><input type="submit" value="Buy" name="buyPlayer" class="btn btn-primary"></td>
+                                                        <td>'.$card->getPlayer()->getName().'</td>
+                                                        <td>Top</td>
+                                                        <td>'.$card->getPlayer()->getKda().'</td>
+                                                        <td>'.$card->getPlayer()->getPrice().'</td>
+                                                        <td>'.$card->getUser()->getName().'</td>
+                                                    </form>
+                                                </tr>'; 
+                                            }
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div>

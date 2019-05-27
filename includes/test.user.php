@@ -8,6 +8,7 @@
     
     require("inc.user.php");
     
+    /*
     $db = MysqliDb::getInstance();
     //print("ping to db = ".($db->ping()).PHP_EOL);
     
@@ -60,4 +61,10 @@
     print("[+] new user is logged after logout? ".($newUser !== FALSE && $newUser->isLogged() ? "YES" : "NO").PHP_EOL);
     print("[+] new user deleted? ".($newUser != false && $newUser->delete() ? "YES" : "NO").PHP_EOL);
      
+    */
+    
+    $u = new User('test@domain.com');
+    if($u->exists()) {
+        print_r($u->getCards());
+    }
 ?>
