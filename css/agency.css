@@ -694,6 +694,7 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
 
 .formSettings{
     width: 100%;
+    min-height: 870px;
     margin:  0 auto;
     background-color: black;
     background-image: linear-gradient(black, gray);
@@ -986,9 +987,8 @@ input:-moz-placeholder { /* Firefox 18- */
 }
 
 /* match Styles */
-/*filter: opacity(.6);*/
 
-.cardTittle{
+.panelTittle{
     background-color: rgb(3, 169, 244) !important;
     color: white !important;
 }
@@ -1009,7 +1009,86 @@ input:-moz-placeholder { /* Firefox 18- */
     margin-bottom: 30px;
 }
 
+.lowMarginTop{
+    margin-top: 30px;
+}
+
 .midMarginBtm{
     margin-bottom: 60px;
 }
 
+.midMarginTop{
+    margin-top: 60px;
+}
+
+.bg-teamPanel{
+    background-color: #03a9f424;
+}
+
+.cardPlayer{
+    width: 200px;
+    height: 175px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.cardBody{
+    flex: 1 1 auto;
+    padding: 0.25rem;
+    border-radius: 20px;
+}
+
+.cardUnranked{
+    border: 10px solid black;
+    background-color: #4847473b;
+}
+
+.cardIron{
+    border: 10px solid #484747;
+    background-color: #4847473b;
+}
+
+.cardBronze{
+    border: 10px solid #ce6104;;
+    background-color: #ce610436;
+}
+
+.cardSilver{
+    border: 10px solid silver;
+    background-color: #c0c0c03b;
+}
+
+.cardGold{
+    border: 10px solid gold;
+    background-color: #ffd7003d;
+}
+
+.cardPlatinum{
+    border: 10px solid palegreen;
+    background-color: #97fb974f;
+}
+
+.cardDiamond{
+    border: 10px solid #09bfbf;
+    background-color: #09bfbf36;
+}
+
+.cardMaster{
+    border: 10px solid darkblue;
+    background: rgba(1, 0, 139, 0.25);
+}
+
+.cardGrandMaster{
+    border: 10px solid #6b0086;
+    background-color: #6b008642;
+}
+
+.cardChallenger{
+    border: 10px solid #84122f;
+    background-color: #84112f3d;
+}
+
+.cardImage{
+    width: 100px;
+    height: 100px;
+}
