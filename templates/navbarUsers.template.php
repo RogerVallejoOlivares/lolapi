@@ -21,10 +21,10 @@
                         <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'main') { echo 'borderBot'; } ?>" href="mainPage.php">Main</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'team') { echo 'borderBot'; } ?>" href="#Team">Team</a>
+                        <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'team') { echo 'borderBot'; } ?>" href="team.php">Team</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'market') { echo 'borderBot'; } ?>" href="#Shop">Shop</a>
+                        <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'shop') { echo 'borderBot'; } ?>" href="shop.php">Shop</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger <?php if(isset($current_page) && $current_page == 'settings') { echo 'borderBot'; } ?>" href="settings.php">Settings</a>
