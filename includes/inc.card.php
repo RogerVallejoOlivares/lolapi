@@ -39,6 +39,19 @@ class Card {
         return $this->playerObject;
     }
     
+    public function getId() {
+        return $this->id;
+    }
+    
+    public function transfer($newUserId) {
+        $data = Array(
+            'idManager'  => $newUserId
+        );
+        
+        self::$db->where('idCard', $this->id);
+        $r = self::$db->update('cardplayer', $data);
+    }
+    
     public static function getAllCards() {
         $cards = self::$db->get('cardplayer', null, 'idCard');
         if($cards && self::$db->count > 0) {
