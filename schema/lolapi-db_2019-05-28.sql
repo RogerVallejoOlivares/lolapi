@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 28-05-2019 a las 02:53:19
+-- Tiempo de generación: 28-05-2019 a las 04:01:29
 -- Versión del servidor: 5.6.35
 -- Versión de PHP: 7.1.1
 
@@ -27,9 +27,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cardplayer` (
-  `idCard` tinyint(4) NOT NULL,
-  `idPlayer` tinyint(4) NOT NULL,
-  `idManager` tinyint(4) NOT NULL,
+  `idCard` int(11) NOT NULL,
+  `idPlayer` int(11) NOT NULL,
+  `idManager` int(11) NOT NULL,
   `dateCreation` date NOT NULL,
   `position` mediumtext COLLATE utf8_spanish_ci NOT NULL,
   `inMarket` tinyint(1) NOT NULL,
@@ -42,8 +42,31 @@ CREATE TABLE `cardplayer` (
 --
 
 INSERT INTO `cardplayer` (`idCard`, `idPlayer`, `idManager`, `dateCreation`, `position`, `inMarket`, `aligned`, `contractDaysLeft`) VALUES
-(1, 1, 2, '2019-05-27', 'jungle', 0, 0, 0),
-(2, 1, 2, '2019-05-07', 'top', 0, 0, 0);
+(1, 152, 1, '2019-05-28', 'top', 0, 1, 50),
+(2, 153, 1, '2019-05-28', 'jungle', 0, 1, 50),
+(3, 154, 1, '2019-05-28', 'mid', 0, 1, 50),
+(4, 155, 1, '2019-05-28', 'adc', 0, 1, 50),
+(5, 156, 1, '2019-05-28', 'support', 0, 1, 50),
+(6, 152, 2, '2019-05-28', 'top', 0, 1, 50),
+(7, 153, 2, '2019-05-28', 'jungle', 0, 1, 50),
+(8, 154, 2, '2019-05-28', 'mid', 0, 1, 50),
+(9, 155, 2, '2019-05-28', 'adc', 0, 1, 50),
+(10, 156, 2, '2019-05-28', 'support', 0, 1, 50),
+(11, 152, 3, '2019-05-28', 'top', 0, 1, 50),
+(12, 153, 3, '2019-05-28', 'jungle', 0, 1, 50),
+(13, 154, 3, '2019-05-28', 'mid', 0, 1, 50),
+(14, 155, 3, '2019-05-28', 'adc', 0, 1, 50),
+(15, 156, 3, '2019-05-28', 'support', 0, 1, 50),
+(16, 152, 4, '2019-05-28', 'top', 0, 1, 50),
+(17, 153, 4, '2019-05-28', 'jungle', 0, 1, 50),
+(18, 154, 4, '2019-05-28', 'mid', 0, 1, 50),
+(19, 155, 4, '2019-05-28', 'adc', 0, 1, 50),
+(20, 156, 4, '2019-05-28', 'support', 0, 1, 50),
+(21, 152, 6, '2019-05-28', '', 0, 1, 50),
+(22, 153, 6, '2019-05-28', '', 0, 1, 50),
+(23, 154, 6, '2019-05-28', '', 0, 1, 50),
+(24, 155, 6, '2019-05-28', '', 0, 1, 50),
+(25, 156, 6, '2019-05-28', '', 0, 1, 50);
 
 -- --------------------------------------------------------
 
@@ -108,10 +131,12 @@ CREATE TABLE `manager` (
 --
 
 INSERT INTO `manager` (`idManager`, `name`, `lastname`, `email`, `password`, `phone`, `birthDay`, `gold`, `elo`) VALUES
-(1, 'Erik', 'Asís', 'test@domain.com', 'MTIzNA==', '600708090', '1993-07-21', 10, 0),
+(1, 'Erik', 'Asís', 'test@domain.com', 'MTIzNA==', '600708090', '1993-07-21', 100000, 0),
 (2, 'Name', 'Last Name', 'test1@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 1000, 1),
 (3, 'Name', 'Last Name', 'test2@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 2),
-(4, 'Name', 'Last Name', 'test3@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 3);
+(4, 'Name', 'Last Name', 'test3@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 3),
+(5, 'Name', 'Last Name', 'test4@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 0),
+(6, 'Name', 'Last Name', 'test5@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -299,7 +324,12 @@ INSERT INTO `player` (`idPlayer`, `accountId`, `summonerId`, `KDA`, `numMatches`
 (148, 'WrEAr4NscOgl66K-2VNcbApywJwtUoLg-Js23oc-N7oHVg', '7bAxmjItTGgsdaGthIVIMtEAnHTJRJ5-rIUxpJyJlOwfgVE', 2.21, 6, 'Kurohigee', 5, 'IV'),
 (149, '4yYDpUxjli4Oug3ER4eP8_yRoEsGJgnZgi4Vu08Pf2O8Xqw', 'NnPiHWI_2rI34Qvl5iDgjBrWd0Mw_HRMUaPkT_w3061QxPw', 2.75, 6, 'Mµgetsµ', 5, 'III'),
 (150, 'Pf8JGMqgNm15evAvqr81AComotX291Vjc-KMdi_6-yD2fg', 'w6kU-OJyoWj_ecUW_Jkt8q2x1n8iQB5_NXQGm_I7R-KLhtI', 3.21, 6, 'AkumaNoKo', 3, 'IV'),
-(151, 'AZuIxCS92Q8cXMeZko-yK_y2sCKTl5ZNA0yMeuANQUwWNA', 'lrllLf9RGH94qDTfx_ifvXcu1-aDK2QhS7h1jmM2uj_VSmk', 4.03, 6, 'Amazing Onichan', 5, 'III');
+(151, 'AZuIxCS92Q8cXMeZko-yK_y2sCKTl5ZNA0yMeuANQUwWNA', 'lrllLf9RGH94qDTfx_ifvXcu1-aDK2QhS7h1jmM2uj_VSmk', 4.03, 6, 'Amazing Onichan', 5, 'III'),
+(152, 'sample', 'sample', 3, 1, 'Top Sample', 1, 'I'),
+(153, 'sample', 'sample', 3, 1, 'Jungle Sample', 1, 'I'),
+(154, 'sample', 'sample', 3, 1, 'Mid Sample', 1, 'I'),
+(155, 'sample', 'sample', 3, 1, 'Adc Sample', 1, 'I'),
+(156, 'sample', 'sample', 3, 1, 'Support Sample', 1, 'I');
 
 --
 -- Índices para tablas volcadas
@@ -353,7 +383,7 @@ ALTER TABLE `player`
 -- AUTO_INCREMENT de la tabla `cardplayer`
 --
 ALTER TABLE `cardplayer`
-  MODIFY `idCard` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT de la tabla `equipamiento`
 --
@@ -368,7 +398,7 @@ ALTER TABLE `league`
 -- AUTO_INCREMENT de la tabla `manager`
 --
 ALTER TABLE `manager`
-  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `match`
 --
@@ -378,7 +408,7 @@ ALTER TABLE `match`
 -- AUTO_INCREMENT de la tabla `player`
 --
 ALTER TABLE `player`
-  MODIFY `idPlayer` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `idPlayer` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 --
 -- Restricciones para tablas volcadas
 --
