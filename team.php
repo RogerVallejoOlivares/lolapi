@@ -9,6 +9,7 @@ if(!isset($_SESSION)) {
 
 include('inc.config.php');
 require(CWD.'includes/inc.user.php');
+require(CWD.'includes/inc.card.php');
 
 $returnUrl = 'index.php';
 $currentUser = User::getCurrentUser();
@@ -22,6 +23,20 @@ $_SESSION['current_page'] = 'team';
 
 include_once('templates/imports.template.php');
 include_once('templates/navbarUsers.template.php');
+
+if(isset($_POST['cancel'])) {
+    $cardId = (int) $_POST['cardId'];
+    if(isset($cardId)) {
+        
+    }
+}
+
+if(isset($_POST['sell'])) {
+    $cardId = (int) $_POST['cardId'];
+    if(isset($cardId)) {
+        
+    }
+}
 
 ?>
 
@@ -45,21 +60,32 @@ include_once('templates/navbarUsers.template.php');
                                             <th>Contract Days</th>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td><button class="btn btn-danger">Sell</button></td>
-                                            <td>player1</td>
-                                            <td>Top</td>
-                                            <td>3.5</td>
-                                            <td>12</td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-danger">Sell</button></td>
-                                            <td>player1</td>
-                                            <td>Top</td>
-                                            <td>3.5</td>
-                                            <td>12</td>
-                                        </tr>
-
+                                        <?php
+                                            $cards = Card::getAllCards();
+                                            foreach($cards as $card) {
+                                                if($card->isAligned()) {
+                                                    continue;
+                                                }
+                                                
+                                                echo '
+                                                    <form method="POST">
+                                                        <input type="hidden" name="cardId" value="'.$card->getId().'"/>
+                                                        <tr>';
+                                                if($card->isInMarket()) {
+                                                    echo '<td><input type="submit" name="cancel" value="Cancel" class="btn btn-danger"/></td>';
+                                                } else {
+                                                    echo '<td><input type="submit" name="sell" value="Sell" class="btn btn-danger"/></td>';
+                                                }
+                                                
+                                                echo '
+                                                        <td>'.$card->getPlayer()->getName().'</td>
+                                                        <td>'.$card->getPosition().'</td>
+                                                        <td>'.$card->getPlayer()->getKda().'</td>
+                                                        <td>'.$card->getContractDaysLeft().'</td>
+                                                    </tr>
+                                                </form>';
+                                            }
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div>

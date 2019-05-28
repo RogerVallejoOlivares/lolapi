@@ -89,6 +89,10 @@ if(isset($_POST['buyPlayer'])) {
                                                     continue;
                                                 }
                                                 
+                                                if(!$card->isInMarket()) {
+                                                    continue;
+                                                }
+                                                
                                                 echo '
                                                 <tr>
                                                     <form method="POST">

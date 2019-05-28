@@ -9,6 +9,9 @@ class Card {
     private $playerObject;
     private $dateCreation;
     private $position;
+    private $inMarket;
+    private $isAligned;
+    private $contractDaysLeft;
     
     public static $db;
         
@@ -29,6 +32,9 @@ class Card {
         $this->playerObject = new Player($r['idPlayer']);
         $this->dateCreation = $r['dateCreation'];
         $this->position = $r['position'];
+        $this->inMarket = $r['inMarket'];
+        $this->aligned = $r['aligned'];
+        $this->contractDaysLeft = $r['contractDaysLeft'];
     }
     
     public function getUser() {
@@ -41,6 +47,22 @@ class Card {
     
     public function getId() {
         return $this->id;
+    }
+    
+    public function getPosition() {
+        return $this->position;
+    }
+    
+    public function isInMarket() {
+        return $this->inMarket;
+    }
+    
+    public function isAligned() {
+        return $this->isAligned;
+    }
+    
+    public function getContractDaysLeft() {
+        return $this->contractDaysLeft;
     }
     
     public function transfer($newUserId) {
