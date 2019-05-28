@@ -4,6 +4,6 @@
       "thingengineer/mysqli-database-class": "dev-master",
         "twbs/bootstrap": "^4.3",
         "components/jquery": "^3.3",
-        "components/font-awesome": "dev-master"
+        "components/font-awesome": "^5.4"
     }
 }

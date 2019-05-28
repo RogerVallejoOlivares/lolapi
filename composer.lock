@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "52155f478e1bffddd5975fcbf2e2829d",
+    "content-hash": "d1537326da09a44798a17a173075bfab",
     "packages": [
         {
             "name": "components/font-awesome",
-            "version": "dev-master",
+            "version": "5.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/font-awesome.git",
@@ -593,8 +593,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "thingengineer/mysqli-database-class": 20,
-        "components/font-awesome": 20
+        "thingengineer/mysqli-database-class": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
