@@ -72,6 +72,27 @@ class Card {
         
         self::$db->where('idCard', $this->id);
         $r = self::$db->update('cardplayer', $data);
+        return ($r);
+    }
+    
+    public function addToMarket() {
+        $data = Array(
+            'inMarket'  => '1'
+        );
+        
+        self::$db->where('idCard', $this->id);
+        $r = self::$db->update('cardplayer', $data);
+        return ($r);
+    }
+    
+    public function removeFromMarket() {
+        $data = Array(
+            'inMarket'  => '0'
+        );
+        
+        self::$db->where('idCard', $this->id);
+        $r = self::$db->update('cardplayer', $data);
+        return ($r);
     }
     
     public static function getAllCards() {

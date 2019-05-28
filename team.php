@@ -26,15 +26,29 @@ include_once('templates/navbarUsers.template.php');
 
 if(isset($_POST['cancel'])) {
     $cardId = (int) $_POST['cardId'];
+    
     if(isset($cardId)) {
+        $card = new Card($cardId);
         
+        if(!User::compare($card->getUser(), $currentUser)) {
+            echo "You can't remove cards from market thath you don't own";
+        } else {
+            $card->removeFromMarket();
+        }
     }
 }
 
 if(isset($_POST['sell'])) {
     $cardId = (int) $_POST['cardId'];
+    
     if(isset($cardId)) {
-        
+        $card = new Card($cardId);
+
+        if(!User::compare($card->getUser(), $currentUser)) {
+            echo "You can't sell cards you don't own";
+        } else {
+            $card->addToMarket();
+        }
     }
 }
 
@@ -61,7 +75,7 @@ if(isset($_POST['sell'])) {
                                         </thead>
                                         <tbody>
                                         <?php
-                                            $cards = Card::getAllCards();
+                                            $cards = $currentUser->getCards();
                                             foreach($cards as $card) {
                                                 if($card->isAligned()) {
                                                     continue;
