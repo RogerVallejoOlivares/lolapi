@@ -1026,16 +1026,23 @@ input:-moz-placeholder { /* Firefox 18- */
 }
 
 .cardPlayer{
-    width: 200px;
-    height: 175px;
+    width: 190px;
+    height: 150px;
     background-color: white;
     border-radius: 20px;
+    margin: 2px;
 }
 
 .cardBody{
     flex: 1 1 auto;
     padding: 0.25rem;
     border-radius: 20px;
+    font-weight: bold;
+}
+
+.cardDetailsRight{
+    margin-top: 12px;
+    margin-left: -5px;
 }
 
 .cardUnranked{
@@ -1091,4 +1098,5 @@ input:-moz-placeholder { /* Firefox 18- */
 .cardImage{
     width: 100px;
     height: 100px;
+    border-radius: 10px;
 }

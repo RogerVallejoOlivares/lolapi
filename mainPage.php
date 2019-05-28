@@ -10,6 +10,7 @@
     include('inc.config.php');
     require(CWD.'includes/inc.user.php');
     require(CWD.'includes/inc.match.php');
+    require(CWD.'includes/inc.card.php');
 
     $returnUrl = 'index.php';
     $currentUser = User::getCurrentUser();
@@ -95,6 +96,11 @@
                 </div>
                 <div class="col-md-4">
                     <h3 class="service-heading">Team</h3> <!-- list aligned players -->
+                    <?php
+                    $cards = Card::getAllCards($currentUser);
+                    if($cards === FALSE) {
+                        echo 'There are no players on your team';
+                    } else { ?>
                     <table class="table table-hover table-dark tablePlayers">
                         <thead>
                         <tr>
@@ -104,31 +110,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>mapilol</td>
-                                <td>3.9</td>
-                                <td>6</td>
-                            </tr>
-                            <tr>
-                                <td>FlapyFish</td>
-                                <td>3.0</td>
-                                <td>4</td>
-                            </tr>
-                            <tr>
-                                <td>Adry2016</td>
-                                <td>2.8</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Naroi</td>
-                                <td>3.2</td>
-                                <td>7</td>
-                            </tr>
-                            <tr>
-                                <td>Karasu13</td>
-                                <td>5.4</td>
-                                <td>2</td>
-                            </tr>
+                        <?php
+                           foreach ($cards as $card){
+                               var_dump($card->isAligned());
+                               die;
+                               if(!User::compare($currentUser, $card->getUser()) || $card->isAligned() === 0) {
+                                   continue;
+                               }
+
+                               echo '
+                                <tr>
+                                    <td>'.$card->getPlayer()->getName().'</td>
+                                    <td>'.$card->getPlayer()->getKda().'</td>
+                                    <td>'.$card->getContractDaysLeft().'</td>
+                                </tr>
+                                ';
+                           }
+                        }
+                        ?>
                         </tbody>
                     </table>
                 </div>

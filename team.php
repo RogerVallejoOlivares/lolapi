@@ -175,22 +175,21 @@ if(isset($_POST['sell'])) {
                 <div class="cardPlayer lowMarginBtm">
                     <div class="cardBody cardChallenger">
                         <div class="row">
-                            <div class="col-9">
+                            <div class="col-12">
                                 <span class="">Matalords2392</span>
-                            </div>
-                            <div class="col-3">
-                                <span class="">4.3</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-9">
-                                <span class="">Jungle</span>
+                            <div class="col-7">
+                                <img class="cardImage" src="img/tint2.jpg">
                             </div>
-                            <div class="col-3">
-                                <span class="">23</span>
+                            <div class="col-5 cardDetailsRight">
+                                <span class="">23</span><br>
+                                <span class="">Jungle</span><br>
+                                <span class="">4.3</span><br>
                             </div>
                         </div>
-                        <img class="cardImage" src="img/tint2.jpg">
+
                     </div>
                 </div>
             </div>
