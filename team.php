@@ -166,7 +166,7 @@ if(isset($_POST['submitSquad'])) {
                                                     <select name="aligned'.$position.'CardId" class="browser-default custom-select">                                            
                                                         <option value="'.$alignedCard->getId().'">'.$alignedCard->getPlayer()->getName().'</option>';
                                         foreach($cardsInPosition as $card) {
-                                            if($card->isAligned()) {
+                                            if($card->isAligned() || $card->isInMarket()) {
                                                 continue;
                                             }
                                             
