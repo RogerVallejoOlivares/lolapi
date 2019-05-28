@@ -14,6 +14,7 @@
 
     $returnUrl = 'index.php';
     $currentUser = User::getCurrentUser();
+    $messageResponse = '';
 
     if($currentUser === FALSE || ($currentUser !== FALSE && !$currentUser->isLogged())) {
         @header('Location: '.$returnUrl);     
@@ -70,20 +71,24 @@
                                 <tr>
                                     <td class="align-middle"> <!-- search game -->
                                         <h3 class="service-heading">Search Game</h3>
-                                        <a class="fa-stack fa-4x textShadowButton align-middle " href="#">
-                                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                                            <i class="fas fa-chess fa-stack-1x fa-inverse"></i>
-                                        </a>
+                                        <form id="formSearchGame" method="post">
+                                            <a id="submitSearchGame" class="fa-stack fa-4x textShadowButton align-middle" name='searchGame' >
+                                                <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                                                <i class="fas fa-chess fa-stack-1x fa-inverse"></i>
+                                            </a>
+                                        </form>
                                         <?php
-                                            $match = Match::search($currentUser);
-                                            if($match === FALSE) {
-                                                echo 'There are no enemies to fight!';
-                                            } else {
-                                                $enemy_user = $match->getEnemyUser();
-                                                if($enemy_user === FALSE) {
-                                                    echo 'An unexpected error ocurred while searching for a fight.';
+                                            if(isset($_POST['searchGame'])) {
+                                                $match = Match::search($currentUser);
+                                                if ($match === FALSE) {
+                                                    $messageResponse = 'There are no enemies to fight!';
                                                 } else {
-                                                    echo 'Your enemy is '.$enemy_user->getEmail();
+                                                    $enemy_user = $match->getEnemyUser();
+                                                    if ($enemy_user === FALSE) {
+                                                        $messageResponse = 'An unexpected error ocurred while searching for a fight.';
+                                                    } else {
+                                                        $messageResponse = 'Your enemy is ' . $enemy_user->getEmail();
+                                                    }
                                                 }
                                             }
                                         ?>
@@ -137,6 +142,12 @@
     </section>
 
 <?php
+
+    if(isset($_POST['searchGame'])) {
+        echo '<script language="javascript">';
+        echo 'alert("' . $messageResponse . '")';
+        echo '</script>';
+    }
 
     include_once('templates/footer.template.php');
 

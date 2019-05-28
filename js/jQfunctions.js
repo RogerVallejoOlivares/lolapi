@@ -1,4 +1,4 @@
-(function($) {
+$(document).ready(function(){
 
     $('#registerUser').submit(function (e) {
         if(isEmail() && passwordsMatch()){
@@ -40,5 +40,10 @@
 
         return check;
     }
+
+    $('#submitSearchGame').click(function (e) {
+        $('#formSearchGame').submit();
+    });
+
 });
 
