@@ -53,7 +53,7 @@ class User {
             return FALSE;
         }
 
-        if (User::userExists($name)) {
+        if (User::userExists($email)) {
             return FALSE;
         }
 
