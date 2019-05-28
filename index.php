@@ -62,8 +62,7 @@
         
         if(
             isset($name) && isset($lastName) && isset($email) && 
-            isset($phone) && isset($birthDay) && isset($pwd) &&
-            isset($pwd2)
+            isset($pwd) && isset($pwd2)
         ) {
             if($pwd != $pwd2) {
                 $messageResponse = 'provided passwords dont match';

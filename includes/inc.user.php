@@ -48,9 +48,7 @@ class User {
         if (!isset($name) ||
                 !isset($lastName) ||
                 !isset($email) ||
-                !isset($password) ||
-                !isset($phone) ||
-                !isset($birthDay)
+                !isset($password)
         ) {
             return FALSE;
         }
@@ -64,8 +62,8 @@ class User {
             'lastname' => $lastName,
             'email' => $email,
             'password' => self::hashPassword($password),
-            'phone' => $phone,
-            'birthDay' => $birthDay
+            'phone' => isset($phone) ? $phone : '',
+            'birthDay' => isset($birthDay) ? $birthDay : '',
         );
 
         self::$db->insert(self::$tableName, $data);
