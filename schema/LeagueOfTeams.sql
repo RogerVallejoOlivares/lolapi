@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 25-05-2019 a las 21:23:18
+-- Tiempo de generación: 28-05-2019 a las 02:48:03
 -- Versión del servidor: 5.6.35
 -- Versión de PHP: 7.1.1
 
@@ -23,8 +23,12 @@ SET time_zone = "+00:00";
 CREATE TABLE `cardplayer` (
   `idCard` tinyint(4) NOT NULL,
   `idPlayer` tinyint(4) NOT NULL,
+  `idManager` tinyint(4) NOT NULL,
   `dateCreation` date NOT NULL,
-  `position` mediumtext COLLATE utf8_spanish_ci NOT NULL
+  `position` mediumtext COLLATE utf8_spanish_ci NOT NULL,
+  `inMarket` tinyint(1) NOT NULL,
+  `aligned` tinyint(1) NOT NULL,
+  `contractDaysLeft` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -100,19 +104,6 @@ CREATE TABLE `player` (
   `leagueRank` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `teamplayer`
---
-
-CREATE TABLE `teamplayer` (
-  `idCard` int(11) NOT NULL,
-  `idManager` smallint(6) NOT NULL,
-  `aligned` tinyint(1) NOT NULL,
-  `contractDaysLeft` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
 --
 -- Índices para tablas volcadas
 --
@@ -165,7 +156,7 @@ ALTER TABLE `player`
 -- AUTO_INCREMENT de la tabla `cardplayer`
 --
 ALTER TABLE `cardplayer`
-  MODIFY `idCard` tinyint(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCard` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `equipamiento`
 --
@@ -180,7 +171,7 @@ ALTER TABLE `league`
 -- AUTO_INCREMENT de la tabla `manager`
 --
 ALTER TABLE `manager`
-  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `match`
 --
@@ -190,7 +181,7 @@ ALTER TABLE `match`
 -- AUTO_INCREMENT de la tabla `player`
 --
 ALTER TABLE `player`
-  MODIFY `idPlayer` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idPlayer` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 --
 -- Restricciones para tablas volcadas
 --
