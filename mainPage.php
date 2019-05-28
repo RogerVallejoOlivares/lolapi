@@ -105,6 +105,7 @@
                         <thead>
                         <tr>
                             <th scope="col">Name</th>
+                            <th scope="col">Position</th>
                             <th scope="col">Value</th>
                             <th scope="col">Contracts</th>
                         </tr>
@@ -112,8 +113,7 @@
                         <tbody>
                         <?php
                            foreach ($cards as $card){
-                               var_dump($card->isAligned());
-                               die;
+
                                if(!User::compare($currentUser, $card->getUser()) || $card->isAligned() === 0) {
                                    continue;
                                }
@@ -121,6 +121,7 @@
                                echo '
                                 <tr>
                                     <td>'.$card->getPlayer()->getName().'</td>
+                                        <td>'.$card->getPosition().'</td>
                                     <td>'.$card->getPlayer()->getKda().'</td>
                                     <td>'.$card->getContractDaysLeft().'</td>
                                 </tr>
