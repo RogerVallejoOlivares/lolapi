@@ -80,7 +80,7 @@ class User {
         $samplePlayers = Array('Top', 'Jungle', 'Mid', 'Adc', 'Support');
         foreach($samplePlayers as $sample) {
             $player = Player::getPlayerByName($sample.' Sample');
-            Card::createCard($user, $player);
+            $card = Card::createCard($user, $player);
             $card->setPosition(strtolower($sample));
         }
         
