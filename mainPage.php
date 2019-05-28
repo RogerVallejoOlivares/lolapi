@@ -54,11 +54,20 @@
                     <h3 class="service-heading">Match List</h3>
 
                     <ul class="list-group"> <!-- list historic games -->
-                        <li class="list-group-item matchListGameWin">Mapilol</li>
-                        <li class="list-group-item matchListGameLost">Inferno</li>
-                        <li class="list-group-item matchListGameLost">Tureka</li>
-                        <li class="list-group-item matchListGameWin">NereGr</li>
-                        <li class="list-group-item matchListGameLost">Asis</li>
+                        <?php
+                            $matches = Match::getMatchHistory($currentUser);
+                            if(count($matches) > 0) {
+                                foreach($matches as $match) {
+                                    if($match->isWinner()) {
+                                        echo '<li class="list-group-item matchListGameWin">'.$match->getEnemyUser()->getName().'</li>';
+                                    } else {
+                                        echo '<li class="list-group-item matchListGameLost">'.$match->getEnemyUser()->getName().'</li>';
+                                    }
+                                }
+                            } else {
+                                echo '<li class="list-group-item matchListGameLost">There are no matches to show!</li>';
+                            }
+                        ?>
                     </ul>
 
                 </div>

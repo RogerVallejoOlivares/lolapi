@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 28-05-2019 a las 04:01:29
+-- Tiempo de generación: 28-05-2019 a las 10:43:54
 -- Versión del servidor: 5.6.35
 -- Versión de PHP: 7.1.1
 
@@ -42,7 +42,7 @@ CREATE TABLE `cardplayer` (
 --
 
 INSERT INTO `cardplayer` (`idCard`, `idPlayer`, `idManager`, `dateCreation`, `position`, `inMarket`, `aligned`, `contractDaysLeft`) VALUES
-(1, 152, 1, '2019-05-28', 'top', 0, 1, 50),
+(1, 152, 1, '2019-05-28', 'top', 0, 0, 50),
 (2, 153, 1, '2019-05-28', 'jungle', 0, 1, 50),
 (3, 154, 1, '2019-05-28', 'mid', 0, 1, 50),
 (4, 155, 1, '2019-05-28', 'adc', 0, 1, 50),
@@ -62,11 +62,13 @@ INSERT INTO `cardplayer` (`idCard`, `idPlayer`, `idManager`, `dateCreation`, `po
 (18, 154, 4, '2019-05-28', 'mid', 0, 1, 50),
 (19, 155, 4, '2019-05-28', 'adc', 0, 1, 50),
 (20, 156, 4, '2019-05-28', 'support', 0, 1, 50),
-(21, 152, 6, '2019-05-28', '', 0, 1, 50),
-(22, 153, 6, '2019-05-28', '', 0, 1, 50),
-(23, 154, 6, '2019-05-28', '', 0, 1, 50),
-(24, 155, 6, '2019-05-28', '', 0, 1, 50),
-(25, 156, 6, '2019-05-28', '', 0, 1, 50);
+(26, 152, 7, '2019-05-28', 'top', 0, 1, 50),
+(27, 153, 7, '2019-05-28', 'jungle', 0, 1, 50),
+(28, 154, 7, '2019-05-28', 'mid', 0, 1, 50),
+(29, 155, 7, '2019-05-28', 'adc', 0, 1, 50),
+(30, 156, 7, '2019-05-28', 'support', 0, 1, 50),
+(31, 1, 1, '2019-05-09', 'top', 0, 1, 111),
+(32, 55, 1, '2019-05-28', 'jungle', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -136,15 +138,15 @@ INSERT INTO `manager` (`idManager`, `name`, `lastname`, `email`, `password`, `ph
 (3, 'Name', 'Last Name', 'test2@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 2),
 (4, 'Name', 'Last Name', 'test3@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 3),
 (5, 'Name', 'Last Name', 'test4@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 0),
-(6, 'Name', 'Last Name', 'test5@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 0);
+(7, 'Name', 'Last Name', 'test5@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `match`
+-- Estructura de tabla para la tabla `matchhistory`
 --
 
-CREATE TABLE `match` (
+CREATE TABLE `matchhistory` (
   `idGame` int(11) NOT NULL,
   `idManager1` int(11) NOT NULL,
   `idManager2` int(11) NOT NULL,
@@ -361,9 +363,9 @@ ALTER TABLE `manager`
   ADD PRIMARY KEY (`idManager`);
 
 --
--- Indices de la tabla `match`
+-- Indices de la tabla `matchhistory`
 --
-ALTER TABLE `match`
+ALTER TABLE `matchhistory`
   ADD PRIMARY KEY (`idGame`),
   ADD KEY `idManager1` (`idManager1`),
   ADD KEY `idManager2` (`idManager2`);
@@ -383,7 +385,7 @@ ALTER TABLE `player`
 -- AUTO_INCREMENT de la tabla `cardplayer`
 --
 ALTER TABLE `cardplayer`
-  MODIFY `idCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT de la tabla `equipamiento`
 --
@@ -398,11 +400,11 @@ ALTER TABLE `league`
 -- AUTO_INCREMENT de la tabla `manager`
 --
 ALTER TABLE `manager`
-  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT de la tabla `match`
+-- AUTO_INCREMENT de la tabla `matchhistory`
 --
-ALTER TABLE `match`
+ALTER TABLE `matchhistory`
   MODIFY `idGame` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `player`
@@ -420,11 +422,11 @@ ALTER TABLE `equipamiento`
   ADD CONSTRAINT `equipamiento_ibfk_1` FOREIGN KEY (`idManager`) REFERENCES `manager` (`idManager`);
 
 --
--- Filtros para la tabla `match`
+-- Filtros para la tabla `matchhistory`
 --
-ALTER TABLE `match`
-  ADD CONSTRAINT `match_ibfk_1` FOREIGN KEY (`idManager1`) REFERENCES `manager` (`idManager`),
-  ADD CONSTRAINT `match_ibfk_2` FOREIGN KEY (`idManager2`) REFERENCES `manager` (`idManager`);
+ALTER TABLE `matchhistory`
+  ADD CONSTRAINT `matchhistory_ibfk_1` FOREIGN KEY (`idManager1`) REFERENCES `manager` (`idManager`),
+  ADD CONSTRAINT `matchhistory_ibfk_2` FOREIGN KEY (`idManager2`) REFERENCES `manager` (`idManager`);
 
 --
 -- Filtros para la tabla `player`

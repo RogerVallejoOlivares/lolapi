@@ -3,16 +3,16 @@
 require(__DIR__.'/../inc.config.php');
 
 class Match {
-    private $current_user;
-    private $enemy_user;
+    private $currentUser;
+    private $enemyUser;
     private $date;
     private $winnerUser;
     
     public static $db;
     
     public function __construct($current_user, $enemy_user, $winnerUser = FALSE, $date = FALSE) {
-        $this->current_user = $current_user;
-        $this->enemy_user = $enemy_user;
+        $this->currentUser = $current_user;
+        $this->enemyUser = $enemy_user;
         $this->winnerUser = $winnerUser;
         $this->date = $date;
     }
@@ -57,7 +57,7 @@ class Match {
         
         self::$db->orderBy('date', 'ASC');
         self::$db->where('idManager1', $user->getId());
-        $matches = self::$db->get('match', $matchCount);
+        $matches = self::$db->get('matchHistory', $matchCount);
         
         foreach($matches as $match) {
             $currentUser = new User($match['idManager1']);
@@ -71,14 +71,18 @@ class Match {
         
         return $matchHistory;
     }
+    
+    public function isWinner() {
+        return ($this->winnerUser->getId() == $currentUser->getId()) ? TRUE : FALSE;
+    }
 
 
     public function getCurrentUser() {
-        return ($this->current_user);
+        return ($this->currentUser);
     }
     
     public function getEnemyUser() {
-        return ($this->enemy_user);
+        return ($this->enemyUser);
     }    
     
     public function getWinnerUser() {
