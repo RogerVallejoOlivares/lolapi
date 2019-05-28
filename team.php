@@ -8,8 +8,7 @@ if(!isset($_SESSION)) {
 }
 
 include('inc.config.php');
-require(CWD.'includes/inc.user.php');
-require(CWD.'includes/inc.card.php');
+include(CWD.'includes/inc.user.php');
 
 $returnUrl = 'index.php';
 $currentUser = User::getCurrentUser();
@@ -121,8 +120,10 @@ if(isset($_POST['sell'])) {
                                     <label for="staticEmail" class="col-sm-6 col-form-label">Top</label>
                                     <div class="col-sm-6">
                                         <select class="browser-default custom-select">
-                                            <option value="1">player1</option>
-                                            <option value="2">player2</option>
+                                            <?php
+                                                $cards = $currentUser->getCurrentCard
+                                             //echo '<option value="1">player1</option>';
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
