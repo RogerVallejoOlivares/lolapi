@@ -41,6 +41,17 @@ class Card {
         return $card;
     }
     
+    public static function getSampleCardByPosition($user, $position) {
+        $cards = $user->getCardsByPosition($position);
+        foreach($cards as $card) {
+            if($card->isSample()) {
+                return $card;
+            }
+        }
+        
+        return FALSE;
+    }
+    
     public function load() {
         self::$db->where('idCard', $this->id);
         $r = self::$db->getOne('cardplayer');

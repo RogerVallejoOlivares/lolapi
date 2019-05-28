@@ -60,13 +60,12 @@ if(isset($_POST['submitSquad'])) {
         $cards = $currentUser->getCardsByPosition($position);
         foreach($cards as $card) {
             if($card->getId() == $alignedCardId) {
-                $card->setAligned(true);
-            } else {
                 if(!$card->isSample() && $card->getContractDaysLeft() <= 0) {
                     echo "Your card '".$card->getPlayer()->getName()."' don't have enought contract days!";
-                    break;
+                } else {                
+                    $card->setAligned(true);
                 }
-                
+            } else {             
                 $card->setAligned(false);
             }
         }
@@ -118,12 +117,17 @@ if(isset($_POST['submitSquad'])) {
                                                     }
                                                 }
                                                 
+                                                $contractDays = $card->getContractDaysLeft();
+                                                if($card->isSample()) {
+                                                    $contractDays = 'Unlimited';
+                                                }
+                                                
                                                 echo '
                                                         <td>'.$card->getPlayer()->getName().'</td>
                                                         <td>'.$card->getPosition().'</td>
                                                         <td>'.$card->getPlayer()->getValue().'</td>
                                                         <td>'.$card->getPlayer()->getLeagueTierName().' '.$card->getPlayer()->getLeagueDivisionName().'</td>
-                                                        <td>'.$card->getContractDaysLeft().'</td>
+                                                        <td>'.$contractDays.'</td>
                                                     </tr>
                                                 </form>';
                                             }
@@ -149,7 +153,8 @@ if(isset($_POST['submitSquad'])) {
                                     foreach($positions as $position) {
                                         $alignedCard = $currentUser->getAlignedCardInPosition($position);
                                         if($alignedCard === FALSE) {
-                                            continue;
+                                            $alignedCard = Card::getSampleCardByPosition($currentUser, $position);
+                                            $alignedCard->setAligned(true);
                                         }
                                         
                                         $cardsInPosition = $currentUser->getCardsByPosition($position);
