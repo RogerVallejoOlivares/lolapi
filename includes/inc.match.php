@@ -55,15 +55,19 @@ class Match {
     public static function getMatchHistory($user, $matchCount = 5) {
         $matchHistory = Array();
         
-        self::$db->orderBy('date', 'ASC');
+        self::$db->orderBy('date', 'DESC');
         self::$db->where('idManager1', $user->getId());
         $matches = self::$db->get('matchHistory', $matchCount);
         
         foreach($matches as $match) {
-            $currentUser = new User($match['idManager1']);
-            $enemyUser = new User($match['idManager2']);
-            $winnerUser = ($match['winner'] == $match['idManager1']) ? $currentUser : $enemyUser;
+            $currentUser = User::getUserById($match['idManager1']);
+            $enemyUser = User::getUserById($match['idManager2']);
             $date = $match['date'];
+            
+            $winnerUser = 0;
+            if($match['winner'] !== 0) {
+                $winnerUser = ($match['winner'] == $match['idManager1']) ? $currentUser : $enemyUser;
+            }            
             
             $m = new Match($currentUser, $enemyUser, $winnerUser, $date);
             array_push($matchHistory, $m);
@@ -78,6 +82,8 @@ class Match {
         $totalCount = 0;
         $winCount = 0;
         $drawCount = 0;
+        $loseCount = 0;
+        
         foreach($positions as $position) {
             $currentUserAligned = $this->currentUser->getAlignedCardInPosition($position);
             $enemyUserAligned = $this->enemyUser->getAlignedCardInPosition($position);
@@ -86,10 +92,22 @@ class Match {
                 continue;
             }
             
-            if($currentUserAligned->getPlayer()->getValue() > $enemyUserAligned->getPlayer()->getValue()) {
-                $winCount = $winCount + 1;
-            } else if($currentUserAligned->getPlayer()->getValue() == $enemyUserAligned->getPlayer()->getValue()) {
-                $drawCount = $drawCount + 1;
+            if($currentUserAligned->getPlayer()->getValue() == $enemyUserAligned->getPlayer()->getValue()) {
+                $drawCount = $drawCount + 1;                
+            } else  {
+                if($currentUserAligned->getPlayer()->getValue() > $enemyUserAligned->getPlayer()->getValue()) {
+                    $winCount = $winCount + 1;
+                } else {
+                    $loseCount = $loseCount + 1;
+                }
+            }
+            
+            if(!$currentUserAligned->isSample()) {
+                $currentUserAligned->setContractDaysLeft($currentUserAligned->getContractDaysLeft() - 1);
+            }
+            
+            if(!$enemyUserAligned->isSample()) {
+                $enemyUserAligned->setContractDaysLeft($enemyUserAligned->getContractDaysLeft() - 1);
             }
             
             $totalCount = $totalCount + 1;
@@ -98,7 +116,7 @@ class Match {
         if($drawCount == $totalCount) {
             $this->winnerUser = 0;
         } else {        
-            $this->winnerUser = ($winCount >= 3) ? $this->currentUser : $this->enemyUser;
+            $this->winnerUser = ($winCount > $loseCount) ? $this->currentUser : $this->enemyUser;
         }
                 
         $this->date = self::$db->now();
@@ -116,7 +134,7 @@ class Match {
     }
         
     public function isWinner() {
-        return ($this->winnerUser->getId() == $this->currentUser->getId()) ? TRUE : FALSE;
+        return ($this->winnerUser !== 0 && $this->winnerUser->getId() == $this->currentUser->getId()) ? TRUE : FALSE;
     }
 
     public function isDraw() {

@@ -27,11 +27,29 @@
         echo 'No player id';
     } else {
         $id = (int) $_GET['id'];
-
-        $enemyUser = User::getUserById($id);
-        $match = new Match($currentUser, $enemyUser);
-        if(!$match->do()) {
-            echo 'Error while calculating match result';
+        
+        if($id == $currentUser->getId()) {
+            echo "You can't match yourself!";
+        } else {
+            $enemyUser = User::getUserById($id);
+            if($enemyUser === FALSE) {
+                echo "An user with this ID don't exist";
+            } else {
+                $match = new Match($currentUser, $enemyUser);
+                if(!$match->do()) {
+                    echo 'Error while calculating match result';
+                } else {
+                    if($match->isDraw()) {
+                        $match->getCurrentUser()->setElo($match->getCurrentUser()->getElo() + 1);
+                        $match->getCurrentUser()->setGold($match->getCurrentUser()->getGold() + 10);
+                    } else {
+                        if($match->isWinner()) {
+                            $match->getCurrentUser()->setElo($match->getCurrentUser()->getElo() + 3);
+                            $match->getCurrentUser()->setGold($match->getCurrentUser()->getGold() + 30);
+                        }
+                    }           
+                }
+            }
         }
     }
 
@@ -99,13 +117,23 @@
                     <div class="card-body text-center" id="">
                         <div class="row lowMarginBtm">
                             <div class="col-lg-5 col-6">
-                                <h3 class="text-primary lowMarginBtm"><?= $match->getCurrentUser()->getName() ?></h3>
+                                <?php
+                                    if($match !== FALSE) {
+                                        if($match->isWinner()) {
+                                            echo '<h3 class="text-primary lowMarginBtm">'.$match->getCurrentUser()->getName().'</h3>';
+                                        } else {
+                                            echo '<h3 class="text-danger lowMarginBtm">'.$match->getCurrentUser()->getName().'</h3>';
+                                        }
+                                    }
+                                ?>
                                 <table class="table table-hover lowMarginBtm">
                                     <tbody>
                                         <?php
                                             $positions = Array('top', 'jungle', 'mid', 'adc', 'support');
+                                            $currentTotalValue = 0;
                                             foreach($positions as $position) {
                                                 $currentUserAligned = $match->getCurrentUser()->getAlignedCardInPosition($position);
+                                                $currentTotalValue = $currentTotalValue + $currentUserAligned->getPlayer()->getValue();
                                                 
                                                 echo '<tr>';
                                                 echo '  <td>'.$currentUserAligned->getPlayer()->getName().'</td>';
@@ -115,16 +143,26 @@
                                         ?>
                                     </tbody>
                                 </table>
-                                <h4>total: 12.5</h4>
+                                <h4>Total: <?= $currentTotalValue ?></h4>
                             </div>
                             <div class="col-lg-5 col-6 offset-lg-2">
-                                <h3 class="text-danger lowMarginBtm"><?= $match->getEnemyUser()->getName() ?></h3>
+                                <?php
+                                    if($match !== FALSE) {
+                                        if(!$match->isWinner()) {
+                                            echo '<h3 class="text-primary lowMarginBtm">'.$match->getEnemyUser()->getName().'</h3>';
+                                        } else {
+                                            echo '<h3 class="text-danger lowMarginBtm">'.$match->getEnemyUser()->getName().'</h3>';
+                                        }
+                                    }
+                                ?>
                                 <table class="table table-hover lowMarginBtm">
                                     <tbody>
                                         <?php
                                             $positions = Array('top', 'jungle', 'mid', 'adc', 'support');
+                                            $enemyTotalValue = 0;
                                             foreach($positions as $position) {
-                                                $ernemyUserAligned = $match->getCurrentUser()->getAlignedCardInPosition($position);
+                                                $ernemyUserAligned = $match->getEnemyUser()->getAlignedCardInPosition($position);
+                                                $enemyTotalValue = $enemyTotalValue + $ernemyUserAligned->getPlayer()->getValue();
                                                 
                                                 echo '<tr>';
                                                 echo '  <td>'.$ernemyUserAligned->getPlayer()->getName().'</td>';
@@ -134,7 +172,7 @@
                                         ?>
                                     </tbody>
                                 </table>
-                                <h4>total: 12.5</h4>
+                                <h4>Total: <?= $enemyTotalValue ?></h4>
                             </div>
                         </div>
                         <?php

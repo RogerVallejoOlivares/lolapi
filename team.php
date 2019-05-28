@@ -111,7 +111,7 @@ if(isset($_POST['submitSquad'])) {
                                                         if($card->isInMarket()) {
                                                             echo '<td><input type="submit" name="cancel" value="Cancel" class="btn btn-danger"/></td>';
                                                         } else {
-                                                            echo '<td><input type="submit" name="sell" value="Sell" class="btn btn-danger"/></td>';
+                                                            echo '<td><input type="submit" name="sell" value="Sell for $'.$card->getPlayer()->getPrice().'" class="btn btn-danger"/></td>';
                                                         }
                                                     }
                                                 }

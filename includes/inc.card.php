@@ -128,6 +128,17 @@ class Card {
         return $this->contractDaysLeft;
     }
     
+    public function setContractDaysLeft($contractDaysLeft) {
+        $data = Array(
+            'contractDaysLeft'  => $contractDaysLeft
+        );
+        
+        self::$db->where('idCard', $this->id);
+        $r = self::$db->update('cardplayer', $data);
+        $this->load();
+        return ($r);
+    }
+    
     public function transfer($newUserId) {
         $data = Array(
             'idManager'  => $newUserId

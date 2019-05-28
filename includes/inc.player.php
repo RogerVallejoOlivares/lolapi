@@ -119,7 +119,7 @@ class Player {
     public function getPrice() {
         // this is a simple formula to know the price of a player
         
-        return round($this->getValue() * 10);
+        return round($this->getValue());
     }
 
     public function getId() {

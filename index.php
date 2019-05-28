@@ -7,7 +7,6 @@
      */
 
     include('inc.config.php');
-    include(CWD.'/includes/inc.user.php');
 
     if(!isset($_SESSION)) {
         @session_start();

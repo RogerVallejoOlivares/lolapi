@@ -302,6 +302,7 @@ class User {
 
     public function setId($property) {
         $this->userPropierties['id'] = $property;
+        $this->save();
     }
 
     public function getPassword($reload = FALSE) {
@@ -312,6 +313,7 @@ class User {
 
     public function setPassword($property) {
         $this->userPropierties['password'] = self::hashPassword($property);
+        $this->save();
     }
 
     public function getName($reload = FALSE) {
@@ -321,6 +323,7 @@ class User {
 
     public function setName($property) {
         $this->userPropierties['name'] = $property;
+        $this->save();
     }
 
     public function getLastName($reload = FALSE) {
@@ -330,6 +333,7 @@ class User {
 
     public function setLastName($property) {
         $this->userPropierties['lastname'] = $property;
+        $this->save();
     }
 
     public function getEmail($reload = FALSE) {
@@ -339,6 +343,7 @@ class User {
 
     public function setEmail($property) {
         $this->userPropierties['email'] = $property;
+        $this->save();
     }
 
     public function getPhone($reload = FALSE) {
@@ -348,6 +353,7 @@ class User {
 
     public function setPhone($property) {
         $this->userPropierties['phone'] = $property;
+        $this->save();
     }
 
     public function getBirthday($reload = FALSE) {
@@ -357,6 +363,7 @@ class User {
 
     public function setBirthday($property) {
         $this->userPropierties['birthDay'] = $property;
+        $this->save();
     }
 
     public function getGold($reload = FALSE) {
@@ -366,6 +373,7 @@ class User {
 
     public function setGold($property) {
         $this->userPropierties['gold'] = $property;
+        $this->save();
     }
 
     public function getElo($reload = FALSE) {
@@ -375,6 +383,7 @@ class User {
 
     public function setElo($property) {
         $this->userPropierties['elo'] = $property;
+        $this->save();
     }
 
 }

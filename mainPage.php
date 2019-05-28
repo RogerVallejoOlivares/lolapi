@@ -55,10 +55,14 @@
                             $matches = Match::getMatchHistory($currentUser);
                             if(count($matches) > 0) {
                                 foreach($matches as $match) {
-                                    if($match->isWinner()) {
-                                        echo '<li class="list-group-item matchListGameWin">'.$match->getEnemyUser()->getName().'</li>';
-                                    } else {
+                                    if($match->isDraw()) {
                                         echo '<li class="list-group-item matchListGameLost">'.$match->getEnemyUser()->getName().'</li>';
+                                    } else {
+                                        if($match->isWinner()) {
+                                            echo '<li class="list-group-item matchListGameWin">'.$match->getEnemyUser()->getName().'</li>';
+                                        } else {
+                                            echo '<li class="list-group-item matchListGameLost">'.$match->getEnemyUser()->getName().'</li>';
+                                        }
                                     }
                                 }
                             } else {
