@@ -121,7 +121,7 @@ if(isset($_POST['submitSquad'])) {
                                                 echo '
                                                         <td>'.$card->getPlayer()->getName().'</td>
                                                         <td>'.$card->getPosition().'</td>
-                                                        <td>'.$card->getPlayer()->getKda().'</td>
+                                                        <td>'.$card->getPlayer()->getValue().'</td>
                                                         <td>'.$card->getPlayer()->getLeagueTierName().' '.$card->getPlayer()->getLeagueDivisionName().'</td>
                                                         <td>'.$card->getContractDaysLeft().'</td>
                                                     </tr>
