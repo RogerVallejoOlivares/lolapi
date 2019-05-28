@@ -88,9 +88,16 @@ class Player {
             
     public function getValue() {
         // this is the simple formula to know the 'power' of a player
-        // will be used in fights       
+        // will be used in fights      
         
-        return ($this->kda + $this->leagueDivisionNumber + $this->leagueTierId);
+        $value = $this->leagueDivisionNumber * 100;
+        $value = $value / (10 - $this->leagueTierId);
+        $value = $value * $this->kda;
+        $value = $value;
+        $value = round($value);
+        return $value;
+        
+        //return ($this->kda + $this->leagueDivisionNumber + $this->leagueTierId);
     }
     
     public function getPrice() {
