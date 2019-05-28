@@ -3,7 +3,6 @@
       "dolejska-daniel/riot-api": "^3.0",
       "thingengineer/mysqli-database-class": "dev-master",
         "twbs/bootstrap": "^4.3",
-        "components/jquery": "^3.3",
-        "components/font-awesome": "^5.4"
+        "components/jquery": "^3.3"
     }
 }
