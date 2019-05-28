@@ -85,6 +85,26 @@ class Player {
         
         return FALSE;
     }
+    
+    public static function getRandomPlayerByTierId($tierId) {
+        
+        if($tierId < 1 || $tierId > 10) {            
+            return FALSE;
+        }
+        
+        self::$db->where('leagueId', $tierId);
+        self::$db->orderBy("RAND ()");
+        $result = self::$db->getOne('player');
+        
+        if(self::$db->count > 0) {
+            if(isset($result['idPlayer'])) {
+                $player = new Player($result['idPlayer']);
+                return $player;
+            }
+        }
+        
+        return FALSE;
+    }
             
     public function getValue() {
         // this is the simple formula to know the 'power' of a player
@@ -158,6 +178,13 @@ class Player {
         return $this->summonerId;
     }
 
+    public function isSample() {
+        $accountId = strtolower($this->getAccountId());
+        $summonerId = strtolower($this->getSummonerId());
+                
+        return ($accountId == 'sample' && $summonerId == 'sample');
+    }
+    
 }
 
 if (!isset(Player::$db)) {

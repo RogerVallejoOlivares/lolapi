@@ -22,28 +22,114 @@
 
     include_once('templates/imports.template.php');
     include_once('templates/navbarUsers.template.php');
-
-    if(isset($_POST['buyPlayer'])) {
-        $cardId = (int) $_POST['cardId'];
-
-        if(!isset($cardId)) {
-            exit();
-        }
-
-        $card = new Card($cardId);
-        if(User::compare($card->getUser(), $currentUser)) { // this prevents that an user buying a card thath already owns
-            $messageResponse = "You can't buy your own card";
-        } else {
-            if($currentUser->getGold() < $card->getPlayer()->getPrice()) {
-                $messageResponse = "You don't have enought money";
-            } else {
-                $currentUser->setGold($currentUser->getGold() - $card->getPlayer()->getPrice());
-                $card->getUser()->setGold($card->getUser()->getGold() + $card->getPlayer()->getPrice());
-                $card->transfer($currentUser->getId());
-                $messageResponse = 'You successfully bought a card!';
+   
+    $newCards = Array();
+    $players = Array();
+    $contracts = 0;
+    if(isset($_GET['id'])) {
+        $boxId = (int) $_GET['id'];
+        
+        $minContracts = 0;
+        $maxContracts = 0;
+        $price = 0;
+        $players = Array();
+        
+        if($boxId == 1) {
+            $minContracts = 3;
+            $maxContracts = 10;
+            $price = 500;
+            
+            $numPlayers = 3;
+            while(count($players) != $numPlayers) {
+                $tierId = rand(1, 4);
+                $randomPlayer = Player::getRandomPlayerByTierId($tierId);                
+                
+                if($randomPlayer === FALSE) {
+                    continue;
+                }
+                
+                if($randomPlayer->isSample()) {
+                    continue;
+                }
+                
+                array_push($players, $randomPlayer);
             }
-        }       
-    }   
+                    
+        } else if($boxId == 2) {
+            $minContracts = 15;
+            $maxContracts = 25;
+            $price = 1000;
+            
+            $numPlayers = 3;
+        
+            while(count($players) != $numPlayers) {
+                $tierId = rand(5, 7);
+                $randomPlayer = Player::getRandomPlayerByTierId($tierId);                
+                
+                if($randomPlayer === FALSE) {
+                    break;
+                }
+                
+                if($randomPlayer->isSample()) {
+                    continue;
+                }
+                
+                array_push($players, $randomPlayer);
+            }
+        
+        } else if($boxId == 3) {
+            $minContracts = 35;
+            $maxContracts = 50;
+            $price = 4000;
+            
+            $numPlayers = 3;            
+        
+            while(count($players) != $numPlayers) {
+                $tierId = rand(8, 10);
+                $randomPlayer = Player::getRandomPlayerByTierId($tierId);                
+                
+                if($randomPlayer === FALSE) {
+                    break;
+                }
+                
+                if($randomPlayer->isSample()) {
+                    continue;
+                }
+                
+                array_push($players, $randomPlayer);
+            }
+        }
+        
+        if($currentUser->getGold() < $price) {
+            echo "You don't have enough money!";            
+        } else {        
+            $contracts = rand($minContracts, $maxContracts);
+            $positions = Array('top', 'jungle', 'mid', 'adc', 'support');
+            
+            foreach($players as $player) {
+                if($player === FALSE) {
+                    echo 'ERROR PLAYER<br>';
+                    print_r($player);
+                    continue;
+                }
+                
+                $card = Card::createCard($currentUser, $player);
+                $card->setPosition($positions[array_rand($positions)]);
+                array_push($newCards, $card);
+            }
+
+            $cards = $currentUser->getCards();            
+            foreach($cards as $card) {
+                if(!$card->isSample()) {
+                    $card->setContractDaysLeft($card->getContractDaysLeft() + $contracts);
+                }
+            }                        
+ 
+            $currentUser->setGold($currentUser->getGold() - $price);
+        }
+    } else {
+        //@header('Location: shop.php');
+    }
 
 ?>
     <section class="formSettings">
@@ -66,44 +152,31 @@
                 <div class="col-md-12 col-12">
                     <div class="card lowMarginBtm">
                         <div class="card-header panelTittle text-center">
-                            <h3 class="">Players</h3>
+                            <h3 class="">Loot</h3>
                         </div>
                         <div class="card-body text-center bg-teamPanel" >
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-12"> 
+                                    You won <?= $contracts ?> contracts for all of your players!
                                     <table class="table table-hover lowMarginTop lowMarginBtm">
                                         <thead>
-                                            <th></th>
                                             <th>Name</th>
                                             <th>Position</th>
                                             <th>Value</th>
-                                            <th>Price</th>
-                                            <th>User</th>
                                         </thead>
                                         <tbody>
                                         <?php
-                                            $cards = Card::getAllCards();
-                                            foreach($cards as $card) {
-                                                if(User::compare($currentUser, $card->getUser())) {
+
+                                            foreach($newCards as $card) {
+                                                if($card === FALSE) {
                                                     continue;
                                                 }
                                                 
-                                                if(!$card->isInMarket()) {
-                                                    continue;
-                                                }
-                                                
-                                                echo '
-                                                <tr>
-                                                    <form method="POST">
-                                                        <input type="hidden" name="cardId" value="'.$card->getId().'"/>
-                                                        <td><input type="submit" value="Buy" name="buyPlayer" class="btn btn-primary"></td>
-                                                        <td>'.$card->getPlayer()->getName().'</td>
-                                                        <td>Top</td>
-                                                        <td>'.$card->getPlayer()->getKda().'</td>
-                                                        <td>'.$card->getPlayer()->getPrice().'</td>
-                                                        <td>'.$card->getUser()->getName().'</td>
-                                                    </form>
-                                                </tr>'; 
+                                                echo '<tr>';
+                                                echo '  <td>'.$card->getPlayer()->getName().'</td>';
+                                                echo '  <td>'.$card->getPosition().'</td>';
+                                                echo '  <td>'.$card->getPlayer()->getValue().'</td>';
+                                                echo '</tr>';
                                             }
                                         ?>
                                         </tbody>
@@ -125,9 +198,7 @@
                                     <i class="fas fa-coins fa-stack-1x fa-inverse text-warning"></i>
                                 </span></h6>
                             <p class="card-text">Three players unranked to silver and equipment, at least one Bronze</p>
-                            <form method="post" action="box.php">
-                                <input type="submit" class="btn btn-primary" name="box1" value="Buy">
-                            </form>
+                            <a href="box.php?id=1" class="btn btn-primary">Buy</a>
                         </div>
                     </div>
                 </div>
@@ -140,9 +211,7 @@
                                     <i class="fas fa-coins fa-stack-1x fa-inverse text-warning"></i>
                                 </span></h6>
                             <p class="card-text">Three players gold to diamond and equipment, at least one platinum</p>
-                            <form method="post" action="box.php">
-                                <input type="submit" class="btn btn-primary" name="box2" value="Buy">
-                            </form>
+                            <a href="box.php?id=2" class="btn btn-primary">Buy</a>
                         </div>
                     </div>
                 </div>

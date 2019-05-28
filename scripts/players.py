@@ -9,9 +9,9 @@ import sys, json
 # constants
 API_KEY = 'RGAPI-ed3facc5-b751-4caa-9e38-b8f282455a53'
 API_REGION = Region.europe_west
-CURRENT_SEASON = Season.season_8
+CURRENT_SEASON = Season.season_9
 QUEUES = {Queue.ranked_solo_fives}
-COMPUTABLE_MATCH_COUNT = 10
+COMPUTABLE_MATCH_COUNT = 5
 OUTPUT_FILE = 'players.json'
 player_history = {}
 SAVE_AFTER_RECORD = True
@@ -81,7 +81,7 @@ def save_match(participant, match):
         if SAVE_AFTER_RECORD:
             save_players()
 
-def get_matches_from_summoner(summoner):
+def get_matches_from_summoner(summoner, recursive = False):
     match_history = None
     try:
         match_history = summoner.match_history#cass.get_match_history(summoner=summoner, queues={Queue.ranked_solo_fives})
@@ -92,26 +92,25 @@ def get_matches_from_summoner(summoner):
 
     match_count = 0
 
-    for m in match_history:
-        p = m.participants[summoner]
-        match_count = match_count + 1
-        save_match(p, m)
+    if recursive:
+        for m in match_history:
+            for p in m.participants:
+                match_count = match_count + 1
+                save_match(p, m)
 
-        if (match_count == COMPUTABLE_MATCH_COUNT):
-            break
-
-    '''
-    for m in match_history:
-        for p in m.participants:
+                if (match_count == COMPUTABLE_MATCH_COUNT):
+                    break
+    else:
+        for m in match_history:
+            p = m.participants[summoner]
             match_count = match_count + 1
             save_match(p, m)
 
             if (match_count == COMPUTABLE_MATCH_COUNT):
                 break
-    '''
 
 # main
-def main():
+def main(recursive = False):
     for p in player_history:
         for q in QUEUES:
             queue_name = str(q.value)
@@ -129,7 +128,7 @@ def main():
                 if True:
                     player_history[p]['lastCheck'] = datetime.now()
                     summoner = Summoner(name=p, region=API_REGION)
-                    get_matches_from_summoner(summoner)
+                    get_matches_from_summoner(summoner, recursive)
                     print('\tnow have %d matches' % len(player_history[p][queue_name]))
 
         if SAVE_AFTER_RECORD:
@@ -147,12 +146,15 @@ if __name__ == "__main__":
     load_players()
     print('there are %d players' % (len(player_history)))
 
-    # victorcr, mapilol, NashiraK, inferno0529, Amazing Onichan, D3VILJHO, Palxic
-    amigos_de_roger = ['Atzur', 'victorcr', 'mapilol', 'NashiraK', 'inferno0529', 'Amazing Onichan', 'D3VILJHO', 'Palxic']
-    for a in amigos_de_roger:
-        print(a)
-        summoner = Summoner(name=a, region=API_REGION)
-        get_matches_from_summoner(summoner)
+    #amigos_de_roger = ['Atzur', 'victorcr', 'mapilol', 'NashiraK', 'inferno0529', 'Amazing Onichan', 'D3VILJHO', 'Palxic']
 
-    #main()
+    random_players = ['damm1313', 'Blomster Finn', 'FatShield', 'IRoxas', 'OCE Import', 'MidN9t']
+
+    if True:
+        for a in random_players:
+            print(a)
+            summoner = Summoner(name=a, region=API_REGION)
+            get_matches_from_summoner(summoner, True)
+
+    main(True)
     save_players()

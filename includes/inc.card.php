@@ -26,8 +26,8 @@ class Card {
             'idManager' => $user->getId(),
             'dateCreation' => self::$db->now(),
             'inMarket' => '0',
-            'aligned' => '1',
-            'contractDaysLeft' => '50',
+            'aligned' => '0',
+            'contractDaysLeft' => '0',
             'position' => ''
         );
 
