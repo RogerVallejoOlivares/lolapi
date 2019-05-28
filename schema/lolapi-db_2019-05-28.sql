@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 28-05-2019 a las 10:43:54
+-- Tiempo de generación: 28-05-2019 a las 16:16:06
 -- Versión del servidor: 5.6.35
 -- Versión de PHP: 7.1.1
 
@@ -67,8 +67,13 @@ INSERT INTO `cardplayer` (`idCard`, `idPlayer`, `idManager`, `dateCreation`, `po
 (28, 154, 7, '2019-05-28', 'mid', 0, 1, 50),
 (29, 155, 7, '2019-05-28', 'adc', 0, 1, 50),
 (30, 156, 7, '2019-05-28', 'support', 0, 1, 50),
-(31, 1, 1, '2019-05-09', 'top', 0, 1, 111),
-(32, 55, 1, '2019-05-28', 'jungle', 0, 0, 0);
+(31, 1, 1, '2019-05-09', 'top', 0, 1, 72),
+(32, 55, 1, '2019-05-28', 'jungle', 0, 0, 0),
+(33, 152, 8, '2019-05-28', 'top', 0, 1, 50),
+(34, 153, 8, '2019-05-28', 'jungle', 0, 1, 50),
+(35, 154, 8, '2019-05-28', 'mid', 0, 1, 50),
+(36, 155, 8, '2019-05-28', 'adc', 0, 1, 50),
+(37, 156, 8, '2019-05-28', 'support', 0, 1, 50);
 
 -- --------------------------------------------------------
 
@@ -133,12 +138,13 @@ CREATE TABLE `manager` (
 --
 
 INSERT INTO `manager` (`idManager`, `name`, `lastname`, `email`, `password`, `phone`, `birthDay`, `gold`, `elo`) VALUES
-(1, 'Erik', 'Asís', 'test@domain.com', 'MTIzNA==', '600708090', '1993-07-21', 100000, 0),
-(2, 'Name', 'Last Name', 'test1@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 1000, 1),
-(3, 'Name', 'Last Name', 'test2@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 2),
-(4, 'Name', 'Last Name', 'test3@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 3),
-(5, 'Name', 'Last Name', 'test4@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 0),
-(7, 'Name', 'Last Name', 'test5@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 0);
+(1, 'Erik', 'Asís', 'test@domain.com', 'MTIzNA==', '600708090', '1993-07-21', 100680, 15),
+(2, 'Name1', 'Last Name', 'test1@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 1000, 0),
+(3, 'Name2', 'Last Name', 'test2@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 2),
+(4, 'Name3', 'Last Name', 'test3@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 3),
+(5, 'Name4', 'Last Name', 'test4@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 0),
+(7, 'Name5', 'Last Name', 'test5@domain.com', 'MTIzNA==', '600708090', '0000-00-00', 0, 0),
+(8, 'Name6', 'Last Name', 'test6@domain.com', 'MTIzNA==', '', '0000-00-00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -151,8 +157,32 @@ CREATE TABLE `matchhistory` (
   `idManager1` int(11) NOT NULL,
   `idManager2` int(11) NOT NULL,
   `winner` int(11) NOT NULL,
-  `date` date NOT NULL
+  `date` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `matchhistory`
+--
+
+INSERT INTO `matchhistory` (`idGame`, `idManager1`, `idManager2`, `winner`, `date`) VALUES
+(1, 1, 2, 1, '2019-05-28 14:35:59'),
+(2, 1, 2, 1, '2019-05-28 14:36:08'),
+(3, 1, 5, 0, '2019-05-28 14:36:10'),
+(4, 1, 2, 1, '2019-05-28 14:36:19'),
+(5, 1, 7, 1, '2019-05-28 14:37:47'),
+(6, 1, 2, 1, '2019-05-28 14:38:25'),
+(7, 1, 4, 1, '2019-05-28 15:14:01'),
+(8, 1, 4, 1, '2019-05-28 15:14:41'),
+(9, 1, 4, 1, '2019-05-28 15:14:44'),
+(10, 1, 4, 1, '2019-05-28 15:14:46'),
+(11, 1, 4, 1, '2019-05-28 15:14:47'),
+(12, 1, 4, 1, '2019-05-28 15:14:48'),
+(13, 1, 4, 1, '2019-05-28 15:14:49'),
+(14, 1, 2, 1, '2019-05-28 15:15:08'),
+(15, 1, 4, 1, '2019-05-28 15:15:10'),
+(16, 1, 4, 1, '2019-05-28 15:15:11'),
+(17, 1, 4, 1, '2019-05-28 15:15:12'),
+(18, 1, 4, 1, '2019-05-28 15:15:13');
 
 -- --------------------------------------------------------
 
@@ -179,8 +209,8 @@ INSERT INTO `player` (`idPlayer`, `accountId`, `summonerId`, `KDA`, `numMatches`
 (1, '-Uk6z8z11l6U_QvfAP3qnaImPVkkoGgIw-x3zQiiqDA', '0vM9CRLm--lwKuw4H7x4t0fg2jARq2ni7JSMeYvbPgfK', 3.11, 114, 'matalords', 5, 'IV'),
 (2, 'FCgbrt2FotVeeSVi9R11wbopFdhYZ88xx0Ay26nVIlDxvnc', 'huVa5IJqNb8zs3NTFh0Q_mGm1_ZRGzB-7cmImMoNxvS3E4Y', 4.01, 5, 'Golken', 5, 'III'),
 (3, 'DdWcpNYl63zNk8QEagqzpb6G9SuyoGy6pdM7Bb-N9s7idvI', 'AVDUZBMUB8e5Lwl28Mqy1zsnmKOLm2vmujifL8E4ASEjlmg', 1.95, 5, 'iTak3uRmAmA', 4, 'IV'),
-(4, 'IJTthUuklre8eAiFMdEVK2iOgsKrGuVbikNRf0j91GLZqSw', 'tDFkD6rqnjOQVt7CDwbJG_6skZtuJGrCu0QhYuHFxx8iNGo', 2.06, 21, 'inferno0529', 4, 'IV'),
-(5, 'E9H9C7mft-CecPGy3n0bI2i6_DG6YkEhJ6VaJCpSNjB47ks', '2GxzfMCX1S7ecth3NiByWJoBaYm82YdPQ5Jh6zCFpmMV11M', 3.98, 73, 'mapilol', 4, 'I'),
+(4, 'IJTthUuklre8eAiFMdEVK2iOgsKrGuVbikNRf0j91GLZqSw', 'tDFkD6rqnjOQVt7CDwbJG_6skZtuJGrCu0QhYuHFxx8iNGo', 3.9, 97, 'inferno0529', 4, 'IV'),
+(5, 'E9H9C7mft-CecPGy3n0bI2i6_DG6YkEhJ6VaJCpSNjB47ks', '2GxzfMCX1S7ecth3NiByWJoBaYm82YdPQ5Jh6zCFpmMV11M', 4.03, 123, 'mapilol', 4, 'I'),
 (6, 'WxyKHwuCNopvRjrTY7yHj8DrwDkaL4oaeZKiC-7-e8ujFw', 'pj5_Hg0N6GSUkNkRD3bAhm32FvPv3WzsKGb1N19vk_3CHI4', 1.38, 5, 'Kire287', 4, 'IV'),
 (7, 'UPCgFDzr1krmPQVEL5Hz6RmvAK-6nXZv_uGJ39po_LXJS7U', '9VA3A1wYR7kVMV7tvYobKNIQGCrtD7SljXa16jqaxLfYLKw', 2.07, 5, 'atlo16', 5, 'III'),
 (8, 'SWdfzjwJF3A_ICx1cZTc-P9q_NHbAvOhKPNUarblH-tnflA', 'K7hEdECNddH3mx6xZSN5lS0k7AvfeweMazIQx37_EktW-B0', 4.86, 5, 'merlintheperfect', 4, 'I'),
@@ -320,18 +350,20 @@ INSERT INTO `player` (`idPlayer`, `accountId`, `summonerId`, `KDA`, `numMatches`
 (142, 'pjP1F-T1FJhYeS1rHflkO5Ja-kUv0br0FXrGTbcJ7LiVvw', 'vdP03MaSTuKG53Xk8Ync0niykp0mXoJe4gfb-zqASnGFv2E', 2.9, 6, 'Lamora34', 5, 'I'),
 (143, 's-dcVYunU8BMaxN6oDYA_ZO4VKxVHx9TgajF9KPX_YCW0l0', 'vk7U_MOvdgY3Y0_07Rn_SJ-HeKdf15gIWeTSjLwF0owlkVE', 3.02, 6, 'm4sharu REFORMED', 4, 'I'),
 (144, '17OzUZZddwN5spx1awIGbbeMCSBJqIW5vu6D213jcahAkU0', 'CBaLbUwmrtYyMmoC6ZIL8bTyM0jsxf9KuCCGS-dz1oi4ung', 2.98, 6, 'pls nerf uber', 5, 'III'),
-(145, 'Y4G9bj5cPrzRJTy55kSNg-0Qdo_-XUP-_2bKDWbdoQ3QViI', 'giO3ukNK1hN95935IFxeykCvfZ7chTKd4FVFUE5gRJW1LN8', 3.8, 17, 'NashiraK', 3, 'I'),
+(145, 'Y4G9bj5cPrzRJTy55kSNg-0Qdo_-XUP-_2bKDWbdoQ3QViI', 'giO3ukNK1hN95935IFxeykCvfZ7chTKd4FVFUE5gRJW1LN8', 4.71, 99, 'NashiraK', 3, 'I'),
 (146, 'IBOhen6tF6en3XEsAa1GGHKuh91QcOB-a1zrDNpDlsyxWw', 'drpo4Fffhb6GRT1ZtVBulYPjyfY6U6-yrTE2kB1M8RV--jM', 2.05, 6, 'Temzelder', 5, 'IV'),
 (147, 'MHFH5-BKRyemLvJhPMGyMU5EWuKTiQGQ7b3d9xeaOED355c', '7hZpdyozABX9aeGR-CbOjoOMjZz0jomyN2NTm3TcKJEcTfo', 6.11, 6, 'sergiciru', 4, 'II'),
 (148, 'WrEAr4NscOgl66K-2VNcbApywJwtUoLg-Js23oc-N7oHVg', '7bAxmjItTGgsdaGthIVIMtEAnHTJRJ5-rIUxpJyJlOwfgVE', 2.21, 6, 'Kurohigee', 5, 'IV'),
 (149, '4yYDpUxjli4Oug3ER4eP8_yRoEsGJgnZgi4Vu08Pf2O8Xqw', 'NnPiHWI_2rI34Qvl5iDgjBrWd0Mw_HRMUaPkT_w3061QxPw', 2.75, 6, 'Mµgetsµ', 5, 'III'),
 (150, 'Pf8JGMqgNm15evAvqr81AComotX291Vjc-KMdi_6-yD2fg', 'w6kU-OJyoWj_ecUW_Jkt8q2x1n8iQB5_NXQGm_I7R-KLhtI', 3.21, 6, 'AkumaNoKo', 3, 'IV'),
-(151, 'AZuIxCS92Q8cXMeZko-yK_y2sCKTl5ZNA0yMeuANQUwWNA', 'lrllLf9RGH94qDTfx_ifvXcu1-aDK2QhS7h1jmM2uj_VSmk', 4.03, 6, 'Amazing Onichan', 5, 'III'),
+(151, 'AZuIxCS92Q8cXMeZko-yK_y2sCKTl5ZNA0yMeuANQUwWNA', 'lrllLf9RGH94qDTfx_ifvXcu1-aDK2QhS7h1jmM2uj_VSmk', 3.32, 100, 'Amazing Onichan', 5, 'III'),
 (152, 'sample', 'sample', 3, 1, 'Top Sample', 1, 'I'),
 (153, 'sample', 'sample', 3, 1, 'Jungle Sample', 1, 'I'),
 (154, 'sample', 'sample', 3, 1, 'Mid Sample', 1, 'I'),
 (155, 'sample', 'sample', 3, 1, 'Adc Sample', 1, 'I'),
-(156, 'sample', 'sample', 3, 1, 'Support Sample', 1, 'I');
+(156, 'sample', 'sample', 3, 1, 'Support Sample', 1, 'I'),
+(157, 'lQ2ac0Xg4v50p31qYydxnzZEBf5qlYVsS7H01h0BuIRXsKQ', 'Wb3_es4EkXQlrz-WxtBQb7P9p0tm2fmLz25eC5mw-TRf6dI', 3.78, 99, 'victorcr', 3, 'I'),
+(158, '5qXfJQLA8zPD81RXs2r2a9AVTWQZeB4fTvli2_3BesJkKr4', '7i8_pKmxq-5p1fXY1AAH5meSCWhWchUadBdVZIVVxwGKuCQ', 3.07, 24, 'D3VILJHO', 5, 'I');
 
 --
 -- Índices para tablas volcadas
@@ -385,7 +417,7 @@ ALTER TABLE `player`
 -- AUTO_INCREMENT de la tabla `cardplayer`
 --
 ALTER TABLE `cardplayer`
-  MODIFY `idCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `idCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT de la tabla `equipamiento`
 --
@@ -400,17 +432,17 @@ ALTER TABLE `league`
 -- AUTO_INCREMENT de la tabla `manager`
 --
 ALTER TABLE `manager`
-  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idManager` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `matchhistory`
 --
 ALTER TABLE `matchhistory`
-  MODIFY `idGame` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idGame` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT de la tabla `player`
 --
 ALTER TABLE `player`
-  MODIFY `idPlayer` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `idPlayer` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 --
 -- Restricciones para tablas volcadas
 --

@@ -82,7 +82,7 @@
                                     <td class="align-middle"> <!-- search game -->
                                         <h3 class="service-heading">Search Game</h3>
                                         <form id="formSearchGame" method="post">
-                                            <a id="submitSearchGame" class="fa-stack fa-4x textShadowButton align-middle" name='searchGame' >
+                                            <a id="submitSearchGame" class="fa-stack fa-4x textShadowButton align-middle" name='searchGame' href='matchPage.php'>
                                                 <i class="fas fa-circle fa-stack-2x text-primary"></i>
                                                 <i class="fas fa-chess fa-stack-1x fa-inverse"></i>
                                             </a>

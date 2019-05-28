@@ -47,9 +47,11 @@ class Match {
             return FALSE;
         }
         
-        $match = new Match($current_user, $enemy_user);
+        return $enemy_user->getId();
         
-        return $match;
+        /*$match = new Match($current_user, $enemy_user);
+        
+        return $match;*/
     }
     
     public static function getMatchHistory($user, $matchCount = 5) {
