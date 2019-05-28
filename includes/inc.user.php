@@ -273,7 +273,7 @@ class User {
     }
     
     public function getAlignedCardInPosition($position) {
-        $cards = $this->getCardsByPosition($position);
+        $cards = $this->getCardsByPosition(strtolower($position));
         foreach($cards as $card) {
             if($card->isAligned()) {
                 return $card;

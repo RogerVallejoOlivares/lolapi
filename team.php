@@ -116,53 +116,25 @@ if(isset($_POST['sell'])) {
                         <div class="container-fluid bg-teamPanel text-center ">
                             <br>
                             <form class="lowMarginTop" method="post">
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-6 col-form-label">Top</label>
-                                    <div class="col-sm-6">
-                                        <select class="browser-default custom-select">
-                                            <?php
-                                                $cards = $currentUser->getCurrentCard
-                                             //echo '<option value="1">player1</option>';
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-6 col-form-label">Jungle</label>
-                                    <div class="col-sm-6">
-                                        <select class="browser-default custom-select">
-                                            <option value="1">player1</option>
-                                            <option value="2">player2</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-6 col-form-label">Mid</label>
-                                    <div class="col-sm-6">
-                                        <select class="browser-default custom-select">
-                                            <option value="1">player1</option>
-                                            <option value="2">player2</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-6 col-form-label">Adc</label>
-                                    <div class="col-sm-6">
-                                        <select class="browser-default custom-select">
-                                            <option value="1">player1</option>
-                                            <option value="2">player2</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-6 col-form-label">Support</label>
-                                    <div class="col-sm-6">
-                                        <select class="browser-default custom-select">
-                                            <option value="1">player1</option>
-                                            <option value="2">player2</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <?php
+                                    $positions = Array('Top', 'Jungle', 'Mid', 'Adc', 'Support');
+                                    foreach($positions as $position) {
+                                        $alignedCard = $currentUser->getAlignedCardInPosition($position);
+                                        if($alignedCard === FALSE) {
+                                            continue;
+                                        }
+                                        
+                                        echo '
+                                            <div class="form-group row">
+                                                <label for="staticEmail" class="col-sm-6 col-form-label">'.$position.'</label>
+                                                <div class="col-sm-6">
+                                                    <select name="aligned'.$position.'CardId" class="browser-default custom-select">                                            
+                                                        <option value="'.$alignedCard->getId().'">'.$alignedCard->getName().'</option>
+                                                    </select>
+                                                 </div>
+                                            </div>';      
+                                    }
+                                ?>
                                 <button type="submit" class="btn bg-lot lowMarginBtm">Submit Squad</button>
                             </form>
                         </div>
