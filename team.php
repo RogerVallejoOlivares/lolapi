@@ -87,8 +87,7 @@ if(isset($_POST['submitSquad'])) {
                                             <th>Name</th>
                                             <th>Position</th>
                                             <th>Value</th>
-                                            <th>League</th>
-                                            <th>division</th>
+                                            <th>League division</th>
                                             <th>Contract Days</th>
                                         </thead>
                                         <tbody>
@@ -114,8 +113,7 @@ if(isset($_POST['submitSquad'])) {
                                                         <td>'.$card->getPlayer()->getName().'</td>
                                                         <td>'.$card->getPosition().'</td>
                                                         <td>'.$card->getPlayer()->getKda().'</td>
-                                                        <td>'.$card->getPlayer()->getLeagueTierName().'</td>
-                                                        <td>'.$card->getPlayer()->getLeagueDivisionName().'</td>
+                                                        <td>'.$card->getPlayer()->getLeagueTierName().' '.$card->getPlayer()->getLeagueDivisionName().'</td>
                                                         <td>'.$card->getContractDaysLeft().'</td>
                                                     </tr>
                                                 </form>';
