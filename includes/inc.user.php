@@ -1,7 +1,6 @@
 <?php
 
 include(__DIR__ . '/../inc.config.php');
-include(CWD . '/includes/inc.card.php');
 
 class User {
 

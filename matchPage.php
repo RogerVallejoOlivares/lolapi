@@ -1,27 +1,39 @@
 <?php
-/**
- * Match page
- */
+    /**
+     * Match page
+     */
 
-if(!isset($_SESSION)) {
-    @session_start();
-}
+    if(!isset($_SESSION)) {
+        @session_start();
+    }
 
-include('inc.config.php');
-require(CWD.'includes/inc.user.php');
+    include('inc.config.php');
 
-$returnUrl = 'index.php';
-$currentUser = User::getCurrentUser();
+    $returnUrl = 'index.php';
+    $currentUser = User::getCurrentUser();
 
-if($currentUser === FALSE || ($currentUser !== FALSE && !$currentUser->isLogged())) {
-    @header('Location: '.$returnUrl);
-    exit();
-}
+    if($currentUser === FALSE || ($currentUser !== FALSE && !$currentUser->isLogged())) {
+        @header('Location: '.$returnUrl);
+        exit();
+    }
 
-$_SESSION['current_page'] = 'main';
+    $_SESSION['current_page'] = 'main';
 
-include_once('templates/imports.template.php');
-include_once('templates/navbarUsers.template.php');
+    include_once('templates/imports.template.php');
+    include_once('templates/navbarUsers.template.php');
+
+    $match = FALSE;
+    if(!isset($_GET['id'])) {
+        echo 'No player id';
+    } else {
+        $id = (int) $_GET['id'];
+
+        $enemyUser = User::getUserById($id);
+        $match = new Match($currentUser, $enemyUser);
+        if(!$match->do()) {
+            echo 'Error while calculating match result';
+        }
+    }
 
 ?>
 
@@ -36,12 +48,40 @@ include_once('templates/navbarUsers.template.php');
                     <div class="card-body text-center" id="cardMap">
                         <div class="row">
                             <div class="col-lg-5 col-6">
-                                <h1 class="nameMatch text-primary">matalords</h1>
-                                <h3 class="midMarginBtm">winner</h3>
+                                <?php
+                                    if($match !== FALSE) {
+                                        if($match->isDraw()) {
+                                            echo '<h1 class="nameMatch text-info">'.$match->getCurrentUser()->getName().'</h1>';
+                                            echo '<h3 class="midMarginBtm">draw</h3>';
+                                        } else {
+                                            if($match->isWinner()) {
+                                                echo '<h1 class="nameMatch text-primary">'.$match->getCurrentUser()->getName().'</h1>';
+                                                echo '<h3 class="midMarginBtm">winner</h3>';
+                                            } else {
+                                                echo '<h1 class="nameMatch text-danger">'.$match->getCurrentUser()->getName().'</h1>';
+                                                echo '<h3 class="midMarginBtm">loser</h3>';
+                                            }
+                                        }
+                                    }
+                                ?> 
                             </div>
                             <div class="col-lg-5 col-6 offset-lg-2">
-                                <h1 class="nameMatch text-danger">asis</h1>
-                                <h3 class="midMarginBtm">loser</h3>
+                                <?php
+                                    if($match !== FALSE) {
+                                        if($match->isDraw()) {
+                                            echo '<h1 class="nameMatch text-info">'.$match->getEnemyUser()->getName().'</h1>';
+                                            echo '<h3 class="midMarginBtm">draw</h3>';
+                                        } else {
+                                            if(!$match->isWinner()) {
+                                                echo '<h1 class="nameMatch text-primary">'.$match->getEnemyUser()->getName().'</h1>';
+                                                echo '<h3 class="midMarginBtm">winner</h3>';
+                                            } else {
+                                                echo '<h1 class="nameMatch text-danger">'.$match->getEnemyUser()->getName().'</h1>';
+                                                echo '<h3 class="midMarginBtm">loser</h3>';
+                                            }
+                                        }
+                                    }
+                                ?>                                 
                             </div>
                         </div>
                         <a href="#detailsMatch" class="btn bg-lot lowMarginBtm" >Go details</a>
@@ -59,63 +99,53 @@ include_once('templates/navbarUsers.template.php');
                     <div class="card-body text-center" id="">
                         <div class="row lowMarginBtm">
                             <div class="col-lg-5 col-6">
-                                <h3 class="text-primary lowMarginBtm">matalords</h3>
+                                <h3 class="text-primary lowMarginBtm"><?= $match->getCurrentUser()->getName() ?></h3>
                                 <table class="table table-hover lowMarginBtm">
                                     <tbody>
-                                    <tr>
-                                        <td>payer1</td>
-                                        <td>1.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>payer2</td>
-                                        <td>2.9</td>
-                                    </tr>
-                                    <tr>
-                                        <td>payer3</td>
-                                        <td>3.5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>payer4</td>
-                                        <td>2.9</td>
-                                    </tr>
-                                    <tr>
-                                        <td>payer5</td>
-                                        <td>3.5</td>
-                                    </tr>
+                                        <?php
+                                            $positions = Array('top', 'jungle', 'mid', 'adc', 'support');
+                                            foreach($positions as $position) {
+                                                $currentUserAligned = $match->getCurrentUser()->getAlignedCardInPosition($position);
+                                                
+                                                echo '<tr>';
+                                                echo '  <td>'.$currentUserAligned->getPlayer()->getName().'</td>';
+                                                echo '  <td>'.$currentUserAligned->getPlayer()->getValue().'</td>';
+                                                echo '</tr>';
+                                            }
+                                        ?>
                                     </tbody>
                                 </table>
                                 <h4>total: 12.5</h4>
                             </div>
                             <div class="col-lg-5 col-6 offset-lg-2">
-                                <h3 class="text-danger lowMarginBtm">asis</h3>
+                                <h3 class="text-danger lowMarginBtm"><?= $match->getEnemyUser()->getName() ?></h3>
                                 <table class="table table-hover lowMarginBtm">
                                     <tbody>
-                                    <tr>
-                                        <td>payer1</td>
-                                        <td>1.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>payer2</td>
-                                        <td>2.9</td>
-                                    </tr>
-                                    <tr>
-                                        <td>payer3</td>
-                                        <td>3.5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>payer4</td>
-                                        <td>2.9</td>
-                                    </tr>
-                                    <tr>
-                                        <td>payer5</td>
-                                        <td>3.5</td>
-                                    </tr>
+                                        <?php
+                                            $positions = Array('top', 'jungle', 'mid', 'adc', 'support');
+                                            foreach($positions as $position) {
+                                                $ernemyUserAligned = $match->getCurrentUser()->getAlignedCardInPosition($position);
+                                                
+                                                echo '<tr>';
+                                                echo '  <td>'.$ernemyUserAligned->getPlayer()->getName().'</td>';
+                                                echo '  <td>'.$ernemyUserAligned->getPlayer()->getValue().'</td>';
+                                                echo '</tr>';
+                                            }
+                                        ?>
                                     </tbody>
                                 </table>
                                 <h4>total: 12.5</h4>
                             </div>
                         </div>
-                        <h3>Winner: matalords</h3>
+                        <?php
+                            if($match !== FALSE) {
+                                if($match->isDraw()) {
+                                    echo '<h3>DRAW</h3>';
+                                } else {
+                                    echo '<h3>WINNER: '.($match->getWinnerUser()->getName()).'</h3>';
+                                }
+                            }
+                        ?>
                     </div>
                 </div>
             </div>

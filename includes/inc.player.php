@@ -107,7 +107,7 @@ class Player {
         if(true) {
             $value = 0;
             $value = $value + ($this->leagueTierId * 0.65);
-            $value = $value + ($this->leagueDivisionNumber * 0.20);            
+            $value = $value + ((4 - $this->leagueDivisionNumber) * 0.20);            
             $value = $value + ($this->kda * 0.15);
             $value = $value * 100;
             $value = round($value);

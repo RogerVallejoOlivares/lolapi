@@ -7,15 +7,15 @@ from datetime import datetime
 import sys, json
 
 # constants
-API_KEY = 'RGAPI-a66c7573-3558-43f9-b8ad-87b9d260efe8'
+API_KEY = 'RGAPI-ed3facc5-b751-4caa-9e38-b8f282455a53'
 API_REGION = Region.europe_west
 CURRENT_SEASON = Season.season_8
 QUEUES = {Queue.ranked_solo_fives}
-COMPUTABLE_MATCH_COUNT = 5
+COMPUTABLE_MATCH_COUNT = 10
 OUTPUT_FILE = 'players.json'
 player_history = {}
 SAVE_AFTER_RECORD = True
-TIME_DIFFERENCE_CHECK = 24 # in hours
+TIME_DIFFERENCE_CHECK = 1 # in hours
 
 # library settings
 settings = cass.get_default_config()
@@ -87,6 +87,7 @@ def get_matches_from_summoner(summoner):
         match_history = summoner.match_history#cass.get_match_history(summoner=summoner, queues={Queue.ranked_solo_fives})
         match_history(seasons={CURRENT_SEASON}, queues=QUEUES, end_index=COMPUTABLE_MATCH_COUNT)
     except:
+        raise
         return
 
     match_count = 0
@@ -143,12 +144,15 @@ def hours_elapsed_from_now(d):
     return ((delta.days * 24) + (delta.seconds) / 3600)
 
 if __name__ == "__main__":
-    # victorcr, mapilol, NashiraK, inferno0529, Amazing Onichan, D3VILJHO
-    #summoner = Summoner(name='matalords', region=API_REGION)
-    #get_matches_from_summoner(summoner)
-
     load_players()
     print('there are %d players' % (len(player_history)))
 
-    main()
+    # victorcr, mapilol, NashiraK, inferno0529, Amazing Onichan, D3VILJHO, Palxic
+    amigos_de_roger = ['Atzur', 'victorcr', 'mapilol', 'NashiraK', 'inferno0529', 'Amazing Onichan', 'D3VILJHO', 'Palxic']
+    for a in amigos_de_roger:
+        print(a)
+        summoner = Summoner(name=a, region=API_REGION)
+        get_matches_from_summoner(summoner)
+
+    #main()
     save_players()

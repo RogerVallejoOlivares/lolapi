@@ -1,6 +1,6 @@
 <?php
 
-require(__DIR__.'/../inc.config.php');
+include(__DIR__.'/../inc.config.php');
 
 class Match {
     private $currentUser;
@@ -72,10 +72,56 @@ class Match {
         return $matchHistory;
     }
     
+    public function do() {
+        $positions = Array('top', 'jungle', 'mid', 'adc', 'support');
+        
+        $totalCount = 0;
+        $winCount = 0;
+        $drawCount = 0;
+        foreach($positions as $position) {
+            $currentUserAligned = $this->currentUser->getAlignedCardInPosition($position);
+            $enemyUserAligned = $this->enemyUser->getAlignedCardInPosition($position);
+                         
+            if($currentUserAligned === FALSE || $enemyUserAligned === FALSE) {
+                continue;
+            }
+            
+            if($currentUserAligned->getPlayer()->getValue() > $enemyUserAligned->getPlayer()->getValue()) {
+                $winCount = $winCount + 1;
+            } else if($currentUserAligned->getPlayer()->getValue() == $enemyUserAligned->getPlayer()->getValue()) {
+                $drawCount = $drawCount + 1;
+            }
+            
+            $totalCount = $totalCount + 1;
+        }
+        
+        if($drawCount == $totalCount) {
+            $this->winnerUser = 0;
+        } else {        
+            $this->winnerUser = ($winCount >= 3) ? $this->currentUser : $this->enemyUser;
+        }
+                
+        $this->date = self::$db->now();
+        
+        $data = Array(
+            'idManager1' => $this->currentUser->getId(),
+            'idManager2' => $this->enemyUser->getId(),
+            'winner' => ($drawCount == $totalCount) ? 0 : $this->winnerUser->getId(),
+            'date' => $this->date,
+        );
+
+        $id = self::$db->insert('matchHistory', $data);
+        
+        return ($id);
+    }
+        
     public function isWinner() {
-        return ($this->winnerUser->getId() == $currentUser->getId()) ? TRUE : FALSE;
+        return ($this->winnerUser->getId() == $this->currentUser->getId()) ? TRUE : FALSE;
     }
 
+    public function isDraw() {
+        return ($this->winnerUser === 0);
+    }
 
     public function getCurrentUser() {
         return ($this->currentUser);

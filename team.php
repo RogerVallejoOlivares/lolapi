@@ -8,7 +8,6 @@ if(!isset($_SESSION)) {
 }
 
 include('inc.config.php');
-include(CWD.'includes/inc.user.php');
 
 $returnUrl = 'index.php';
 $currentUser = User::getCurrentUser();

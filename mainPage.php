@@ -8,9 +8,6 @@
     }
     
     include('inc.config.php');
-    include(CWD.'includes/inc.user.php');
-    include(CWD.'includes/inc.match.php');
-    //include(CWD.'includes/inc.card.php');
 
     $returnUrl = 'index.php';
     $currentUser = User::getCurrentUser();

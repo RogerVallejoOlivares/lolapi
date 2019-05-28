@@ -9,6 +9,12 @@
     /** Global variables **/
     @define('CWD', __DIR__.'/');
     
+    /** Classes **/
+    include_once(CWD.'/includes/inc.user.php');
+    include_once(CWD.'/includes/inc.player.php');
+    include_once(CWD.'/includes/inc.card.php');
+    include_once(CWD.'/includes/inc.match.php');
+    
     /** Riot API setup */
     use RiotAPI\LeagueAPI\LeagueAPI;
     use RiotAPI\LeagueAPI\Definitions\Region;
