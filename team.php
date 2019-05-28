@@ -62,6 +62,11 @@ if(isset($_POST['submitSquad'])) {
             if($card->getId() == $alignedCardId) {
                 $card->setAligned(true);
             } else {
+                if(!$card->isSample() && $card->getContractDaysLeft() <= 0) {
+                    echo "Your card '".$card->getPlayer()->getName()."' don't have enought contract days!";
+                    break;
+                }
+                
                 $card->setAligned(false);
             }
         }
@@ -101,17 +106,21 @@ if(isset($_POST['submitSquad'])) {
                                                 if($card->isAligned()) {
                                                     echo '<td><button class="btn btn-info"/>Aligned</button></td>';
                                                 } else {
-                                                    if($card->isInMarket()) {
-                                                        echo '<td><input type="submit" name="cancel" value="Cancel" class="btn btn-danger"/></td>';
+                                                    if($card->isSample()) {
+                                                        echo '<td><button class="btn btn-info"/>Sample</button></td>';
                                                     } else {
-                                                        echo '<td><input type="submit" name="sell" value="Sell" class="btn btn-danger"/></td>';
+                                                        if($card->isInMarket()) {
+                                                            echo '<td><input type="submit" name="cancel" value="Cancel" class="btn btn-danger"/></td>';
+                                                        } else {
+                                                            echo '<td><input type="submit" name="sell" value="Sell" class="btn btn-danger"/></td>';
+                                                        }
                                                     }
                                                 }
                                                 
                                                 echo '
                                                         <td>'.$card->getPlayer()->getName().'</td>
                                                         <td>'.$card->getPosition().'</td>
-                                                        <td>'.$card->getPlayer()->getKda().'</td>
+                                                        <td>'.$card->getPlayer()->getValue().'</td>
                                                         <td>'.$card->getContractDaysLeft().'</td>
                                                     </tr>
                                                 </form>';

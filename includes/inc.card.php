@@ -54,7 +54,7 @@ class Card {
         $this->position = $r['position'];
         $this->inMarket = $r['inMarket'];
         $this->isAligned = $r['aligned'];
-        $this->contractDaysLeft = $r['contractDaysLeft'];
+        $this->contractDaysLeft = $r['contractDaysLeft'];        
     }
     
     public function getUser() {
@@ -97,6 +97,13 @@ class Card {
         $this->load();
         
         return ($r);
+    }
+    
+    public function isSample() {
+        $accountId = strtolower($this->getPlayer()->getAccountId());
+        $summonerId = strtolower($this->getPlayer()->getSummonerId());
+                
+        return ($accountId == 'sample' && $summonerId == 'sample');
     }
     
     public function isInMarket() {

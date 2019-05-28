@@ -7,6 +7,8 @@ class Player {
     private $id;
     private $kda;
     private $name;
+    private $accountId;
+    private $summonerId;
     private $leagueTierId;
     private $leagueTierName;
     private $leagueDivisionNumber;
@@ -25,6 +27,8 @@ class Player {
             $this->leagueTierName = self::getLeagueById($result['leagueId']);
             $this->leagueDivisionNumber = self::getDivisionNumberByName($result['leagueRank']);
             $this->leagueDivisionName = $result['leagueRank'];
+            $this->accountId = $result['accountId'];
+            $this->summonerId = $result['summonerId'];
         }
         
         return FALSE;
@@ -99,27 +103,36 @@ class Player {
         return $this->id;
     }
 
-    function getKda() {
+    public function getKda() {
         return $this->kda;
     }
 
-    function getName() {
+    public function getName() {
         return $this->name;
     }
-    function getLeagueTierId() {
+    
+    public function getLeagueTierId() {
         return $this->leagueTierId;
     }
 
-    function getLeagueTierName() {
+    public function getLeagueTierName() {
         return $this->leagueTierName;
     }
 
-    function getLeagueDivisionNumber() {
+    public function getLeagueDivisionNumber() {
         return $this->leagueDivisionNumber;
     }
 
-    function getLeagueDivisionName() {
+    public function getLeagueDivisionName() {
         return $this->leagueDivisionName;
+    }
+    
+    public function getAccountId() {
+        return $this->accountId;
+    }
+    
+    public function getSummonerId() {
+        return $this->summonerId;
     }
 
 }

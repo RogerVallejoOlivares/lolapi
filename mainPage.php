@@ -126,8 +126,8 @@
                                echo '
                                 <tr>
                                     <td>'.$card->getPlayer()->getName().'</td>
-                                        <td>'.$card->getPosition().'</td>
-                                    <td>'.$card->getPlayer()->getKda().'</td>
+                                    <td>'.$card->getPosition().'</td>
+                                    <td>'.$card->getPlayer()->getValue().'</td>
                                     <td>'.$card->getContractDaysLeft().'</td>
                                 </tr>
                                 ';
