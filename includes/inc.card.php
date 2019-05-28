@@ -28,7 +28,8 @@ class Card {
             'dateCreation' => self::$db->now(),
             'inMarket' => '0',
             'aligned' => '1',
-            'contractDaysLeft' => '50'
+            'contractDaysLeft' => '50',
+            'position' => ''
         );
 
         $id = self::$db->insert('cardplayer', $data);

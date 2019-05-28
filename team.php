@@ -124,6 +124,8 @@ if(isset($_POST['sell'])) {
                                             continue;
                                         }
                                         
+                                        $cardsInPosition = $currentUser->getCardsByPosition($position);
+                                        
                                         echo '
                                             <div class="form-group row">
                                                 <label for="staticEmail" class="col-sm-6 col-form-label">'.$position.'</label>
