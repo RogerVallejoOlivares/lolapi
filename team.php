@@ -129,7 +129,7 @@ if(isset($_POST['sell'])) {
                                                 <label for="staticEmail" class="col-sm-6 col-form-label">'.$position.'</label>
                                                 <div class="col-sm-6">
                                                     <select name="aligned'.$position.'CardId" class="browser-default custom-select">                                            
-                                                        <option value="'.$alignedCard->getId().'">'.$alignedCard->getName().'</option>
+                                                        <option value="'.$alignedCard->getId().'">'.$alignedCard->getPlayer()->getName().'</option>
                                                     </select>
                                                  </div>
                                             </div>';      

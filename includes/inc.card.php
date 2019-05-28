@@ -52,7 +52,7 @@ class Card {
         $this->dateCreation = $r['dateCreation'];
         $this->position = $r['position'];
         $this->inMarket = $r['inMarket'];
-        $this->aligned = $r['aligned'];
+        $this->isAligned = $r['aligned'];
         $this->contractDaysLeft = $r['contractDaysLeft'];
     }
     
@@ -78,7 +78,11 @@ class Card {
         );
         
         self::$db->where('idCard', $this->id);
-        self::$db->update('cardplayer', $data);
+        $r = self::$db->update('cardplayer', $data);
+        
+        $this->load();
+        
+        return ($r);
     }
     
     public function isInMarket() {
@@ -100,6 +104,9 @@ class Card {
         
         self::$db->where('idCard', $this->id);
         $r = self::$db->update('cardplayer', $data);
+        
+        $this->load();
+        
         return ($r);
     }
     
@@ -110,6 +117,9 @@ class Card {
         
         self::$db->where('idCard', $this->id);
         $r = self::$db->update('cardplayer', $data);
+        
+        $this->load();
+        
         return ($r);
     }
     
@@ -120,6 +130,9 @@ class Card {
         
         self::$db->where('idCard', $this->id);
         $r = self::$db->update('cardplayer', $data);
+        
+        $this->load();
+        
         return ($r);
     }
     
