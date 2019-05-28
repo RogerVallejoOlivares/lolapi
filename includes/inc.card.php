@@ -21,6 +21,25 @@ class Card {
         $this->load();
     }
     
+    public static function createCard($user, $player) {
+        $data = Array(
+            'idPlayer' => $player->getId(),
+            'idManager' => $user->getId(),
+            'dateCreation' => self::$db->now(),
+            'inMarket' => '0',
+            'aligned' => '1',
+            'contractDaysLeft' => '50'
+        );
+
+        $id = self::$db->insert('cardplayer', $data);
+        if(!$id) {
+            return FALSE;
+        }
+        
+        $card = new Card($id);
+        return $card;
+    }
+    
     public function load() {
         self::$db->where('idCard', $this->id);
         $r = self::$db->getOne('cardplayer');
@@ -51,6 +70,15 @@ class Card {
     
     public function getPosition() {
         return $this->position;
+    }
+    
+    public function setPosition($newPosition) {
+        $data = Array(
+            'position' => $newPosition,
+        );
+        
+        self::$db->where('idCard', $this->id);
+        self::$db->update('cardplayer', $data);
     }
     
     public function isInMarket() {

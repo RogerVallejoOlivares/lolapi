@@ -74,6 +74,14 @@ class User {
         }
 
         $user = new User($data[self::$usernameField]);
+        
+        // add sample cards
+        $samplePlayers = Array('Top Sample', 'Jungle Sample', 'Mid Sample', 'Adc Sample', 'Support Sample');
+        foreach($samplePlayers as $sample) {
+            $player = Player::getPlayerByName($sample);
+            Card::createCard($user, $player);
+        }
+        
         return $user;
     }
 
@@ -88,6 +96,21 @@ class User {
 
         $user = new User($_SESSION[self::$sessionKey]);
         return ($user);
+    }
+    
+    public static function getAllUsers() {
+        $users = self::$db->get(self::$tableName, null, self::$usernameField);
+        if($users && self::$db->count > 0) {
+            $userList = Array();
+            foreach($users as $user) {
+                $u = new User($user[self::$usernameField]);
+                array_push($userList, $u);
+            }
+            
+            return $userList;
+        }
+        
+        return FALSE;
     }
 
     public static function getUserById($id) {

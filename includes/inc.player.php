@@ -11,12 +11,12 @@ class Player {
     private $leagueTierName;
     private $leagueDivisionNumber;
     private $leagueDivisionName;
+    
+    public static $db;
 
     public function __construct($id) {
-        $db = MysqliDb::getInstance();
-        
-        $db->where('idPlayer', $id);
-        $result = $db->getOne('player');
+        self::$db->where('idPlayer', $id);
+        $result = self::$db->getOne('player');
         if($result) {
             $this->id = $id;
             $this->kda = $result['KDA'];
@@ -31,9 +31,8 @@ class Player {
     }
     
     public static function getLeagueById($leagueId) {
-        $db = MysqliDb::getInstance();
-        $db->where('leagueid', $leagueId);
-        $result = $db->getOne('league');
+        self::$db->where('leagueid', $leagueId);
+        $result = self::$db->getOne('league');
         if($result) {
             if(isset($result['name'])) {
                 return $result['name'];
@@ -56,9 +55,8 @@ class Player {
     }
     
     public static function getAllPlayers() {
-        $db = MysqliDb::getInstance();
-        $players = $db->get('player', null, 'idPlayer');
-        if($players && $db->count > 0) {
+        $players = self::$db->get('player', null, 'idPlayer');
+        if($players && self::$db->count > 0) {
             $playerList = Array();
             foreach($players as $player) {
                 $p = new Player($player['idPlayer']);
@@ -70,7 +68,20 @@ class Player {
         
         return FALSE;
     } 
+    
+    public static function getPlayerByName($name) {
+        self::$db->where('name', $name);
+        $result = self::$db->getOne('player', 'idPlayer');
+        if($result) {
+            if(isset($result['idPlayer'])) {
+                $player = new Player($result['idPlayer']);
+                return $player;
+            }
+        }
         
+        return FALSE;
+    }
+            
     public function getValue() {
         // this is the simple formula to know the 'power' of a player
         // will be used in fights       
@@ -111,6 +122,10 @@ class Player {
         return $this->leagueDivisionName;
     }
 
+}
+
+if (!isset(Player::$db)) {
+    Player::$db = MysqliDb::getInstance(); // this is a little hack to initialize a static variable
 }
 
 ?>
