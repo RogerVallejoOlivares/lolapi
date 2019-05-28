@@ -86,6 +86,19 @@ class Card {
         return ($r);
     }
     
+    public function setAligned($newAlignment) {
+        $data = Array(
+            'aligned' => $newAlignment,
+        );
+        
+        self::$db->where('idCard', $this->id);
+        $r = self::$db->update('cardplayer', $data);
+        
+        $this->load();
+        
+        return ($r);
+    }
+    
     public function isInMarket() {
         return $this->inMarket;
     }

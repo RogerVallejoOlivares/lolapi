@@ -23,6 +23,8 @@ $_SESSION['current_page'] = 'team';
 include_once('templates/imports.template.php');
 include_once('templates/navbarUsers.template.php');
 
+$positions = Array('Top', 'Jungle', 'Mid', 'Adc', 'Support');
+
 if(isset($_POST['cancel'])) {
     $cardId = (int) $_POST['cardId'];
     
@@ -47,6 +49,21 @@ if(isset($_POST['sell'])) {
             echo "You can't sell cards you don't own";
         } else {
             $card->addToMarket();
+        }
+    }
+}
+
+if(isset($_POST['submitSquad'])) {
+    foreach($positions as $position) {
+        $alignedCardId = (int) $_POST['aligned'.$position.'CardId'];
+        
+        $cards = $currentUser->getCardsByPosition($position);
+        foreach($cards as $card) {
+            if($card->getId() == $alignedCardId) {
+                $card->setAligned(true);
+            } else {
+                $card->setAligned(false);
+            }
         }
     }
 }
@@ -76,18 +93,19 @@ if(isset($_POST['sell'])) {
                                         <?php
                                             $cards = $currentUser->getCards();
                                             foreach($cards as $card) {
-                                                if($card->isAligned()) {
-                                                    continue;
-                                                }
                                                 
                                                 echo '
                                                     <form method="POST">
                                                         <input type="hidden" name="cardId" value="'.$card->getId().'"/>
                                                         <tr>';
-                                                if($card->isInMarket()) {
-                                                    echo '<td><input type="submit" name="cancel" value="Cancel" class="btn btn-danger"/></td>';
+                                                if($card->isAligned()) {
+                                                    echo '<td><button class="btn btn-info"/>Aligned</button></td>';
                                                 } else {
-                                                    echo '<td><input type="submit" name="sell" value="Sell" class="btn btn-danger"/></td>';
+                                                    if($card->isInMarket()) {
+                                                        echo '<td><input type="submit" name="cancel" value="Cancel" class="btn btn-danger"/></td>';
+                                                    } else {
+                                                        echo '<td><input type="submit" name="sell" value="Sell" class="btn btn-danger"/></td>';
+                                                    }
                                                 }
                                                 
                                                 echo '
@@ -116,8 +134,7 @@ if(isset($_POST['sell'])) {
                         <div class="container-fluid bg-teamPanel text-center ">
                             <br>
                             <form class="lowMarginTop" method="post">
-                                <?php
-                                    $positions = Array('Top', 'Jungle', 'Mid', 'Adc', 'Support');
+                                <?php                                    
                                     foreach($positions as $position) {
                                         $alignedCard = $currentUser->getAlignedCardInPosition($position);
                                         if($alignedCard === FALSE) {
@@ -131,13 +148,22 @@ if(isset($_POST['sell'])) {
                                                 <label for="staticEmail" class="col-sm-6 col-form-label">'.$position.'</label>
                                                 <div class="col-sm-6">
                                                     <select name="aligned'.$position.'CardId" class="browser-default custom-select">                                            
-                                                        <option value="'.$alignedCard->getId().'">'.$alignedCard->getPlayer()->getName().'</option>
-                                                    </select>
+                                                        <option value="'.$alignedCard->getId().'">'.$alignedCard->getPlayer()->getName().'</option>';
+                                        foreach($cardsInPosition as $card) {
+                                            if($card->isAligned()) {
+                                                continue;
+                                            }
+                                            
+                                            echo '<option value="'.$card->getId().'">'.$card->getPlayer()->getName().'</option>';
+                                        }
+                                       
+                                        echo '      </select>
                                                  </div>
                                             </div>';      
                                     }
                                 ?>
-                                <button type="submit" class="btn bg-lot lowMarginBtm">Submit Squad</button>
+
+                                <input type="submit" name="submitSquad" class="btn bg-lot lowMarginBtm" value="Submit Squad"/>
                             </form>
                         </div>
 

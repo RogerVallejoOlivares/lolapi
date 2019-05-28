@@ -264,7 +264,7 @@ class User {
         $cardsByPosition = Array();
         
         foreach($cards as $card) {
-            if($card->getPosition() === $position) {
+            if(strtolower($card->getPosition()) === strtolower($position)) {
                 array_push($cardsByPosition, $card);
             }
         }
