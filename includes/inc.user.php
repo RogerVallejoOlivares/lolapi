@@ -1,6 +1,7 @@
 <?php
 
-require(__DIR__ . '/../inc.config.php');
+include(__DIR__ . '/../inc.config.php');
+include(CWD . '/includes/inc.card.php');
 
 class User {
 
@@ -255,6 +256,19 @@ class User {
         }
         
         return $cardList;
+    }
+    
+    public function getCardsByPosition($position) {
+        $cards = $this->getCards();
+        $cardsByPosition = Array();
+        
+        foreach($cards as $card) {
+            if($card->getPosition() === $position) {
+                array_push($cardsByPosition, $card);
+            }
+        }
+        
+        return $cardsByPosition;
     }
     
     /* Getters & setters */
