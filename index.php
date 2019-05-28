@@ -162,15 +162,15 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="form-group">
-                                <label for="nameSign">Name</label>
+                                <label for="nameSign">Name *</label>
                                 <input type="text" class="form-control" id="nameSign" name="name" required>
                             </div>
                             <div class="form-group">
-                                <label for="lNameSign">Lastname</label>
+                                <label for="lNameSign">Lastname *</label>
                                 <input type="text" class="form-control" id="lNameSign" name="lName">
                             </div>
                             <div class="form-group">
-                                <label for="emailSign">Email</label>
+                                <label for="emailSign">Email *</label>
                                 <input type="email" class="form-control" id="emailSign" name="email" required>
                             </div>
                             <div class="form-group">
@@ -178,18 +178,19 @@
                                 <input type="text" class="form-control" id="phoneSing" name="phone">
                             </div>
                             <div class="form-group">
-                                <label for="dateSign">date of birth</label>
+                                <label for="dateSign">date of birth *</label>
                                 <input type="date" class="form-control" id="dateSign" name="date" placeholder="dd/mm/yyyy">
                             </div>
                             <div class="form-group">
-                                <label for="pwdSign">Password</label>
+                                <label for="pwdSign">Password *</label>
                                 <input type="password" class="form-control" id="pwdSign" name="pwd" required>
                             </div>
                             <div class="form-group">
-                                <label for="pwd2Sign">Password</label>
+                                <label for="pwd2Sign">Repeat Password *</label>
                                 <input  type="password" class="form-control" id="pwd2Sign" name="pwd2" required>
                             </div>
                         </div>
+                        * Mandatory field
                     </div>
 
                     <div class="container">

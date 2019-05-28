@@ -185,29 +185,7 @@ if(isset($_POST['submitSquad'])) {
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="cardPlayer lowMarginBtm">
-                    <div class="cardBody cardChallenger">
-                        <div class="row">
-                            <div class="col-12">
-                                <span class="">Matalords2392</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-7">
-                                <img class="cardImage" src="img/tint2.jpg">
-                            </div>
-                            <div class="col-5 cardDetailsRight">
-                                <span class="">23</span><br>
-                                <span class="">Jungle</span><br>
-                                <span class="">4.3</span><br>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </section>
 

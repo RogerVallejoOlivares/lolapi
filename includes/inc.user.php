@@ -47,7 +47,8 @@ class User {
         if (!isset($name) ||
                 !isset($lastName) ||
                 !isset($email) ||
-                !isset($password)
+                !isset($password) ||
+                !isset($birthDay)
         ) {
             return FALSE;
         }
