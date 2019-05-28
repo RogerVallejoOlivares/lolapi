@@ -73,7 +73,7 @@ if(isset($_POST['submitSquad'])) {
     <section class="formSettings">
         <div class="container">
             <div class="row">
-                <div class="col-md-8 col-12">
+                <div class="col-xl-8 col-12">
                     <div class="card lowMarginBtm">
                         <div class="card-header panelTittle text-center">
                             <h3 class="">Players</h3>
@@ -87,6 +87,8 @@ if(isset($_POST['submitSquad'])) {
                                             <th>Name</th>
                                             <th>Position</th>
                                             <th>Value</th>
+                                            <th>League</th>
+                                            <th>division</th>
                                             <th>Contract Days</th>
                                         </thead>
                                         <tbody>
@@ -112,6 +114,8 @@ if(isset($_POST['submitSquad'])) {
                                                         <td>'.$card->getPlayer()->getName().'</td>
                                                         <td>'.$card->getPosition().'</td>
                                                         <td>'.$card->getPlayer()->getKda().'</td>
+                                                        <td>'.$card->getPlayer()->getLeagueTierName().'</td>
+                                                        <td>'.$card->getPlayer()->getLeagueDivisionName().'</td>
                                                         <td>'.$card->getContractDaysLeft().'</td>
                                                     </tr>
                                                 </form>';
@@ -126,7 +130,7 @@ if(isset($_POST['submitSquad'])) {
                     </div>
                 </div>
 
-                <div class="col-md-4 col-12">
+                <div class="col-xl-4 offset-xl-0 offset-md-3 col-6">
                     <div class="card lowMarginBtm">
                         <div class="card-header panelTittle text-center">
                             <h3 class="">Squad</h3>

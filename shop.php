@@ -12,6 +12,7 @@ include(CWD.'includes/inc.user.php');
 
 $returnUrl = 'index.php';
 $currentUser = User::getCurrentUser();
+$messageResponse = "";
 
 if($currentUser === FALSE || ($currentUser !== FALSE && !$currentUser->isLogged())) {
     @header('Location: '.$returnUrl);
@@ -32,15 +33,15 @@ if(isset($_POST['buyPlayer'])) {
     
     $card = new Card($cardId);
     if(User::compare($card->getUser(), $currentUser)) { // this prevents that an user buying a card thath already owns
-        echo "You can't buy your own card";
+        $messageResponse = "You can't buy your own card";
     } else {
         if($currentUser->getGold() < $card->getPlayer()->getPrice()) {
-            echo "You don't have enought money";
+            $messageResponse = "You don't have enought money";
         } else {
             $currentUser->setGold($currentUser->getGold() - $card->getPlayer()->getPrice());
             $card->getUser()->setGold($card->getUser()->getGold() + $card->getPlayer()->getPrice());
             $card->transfer($currentUser->getId());
-            echo 'You successfully bought a card!';
+            $messageResponse = 'You successfully bought a card!';
         }
     }       
 }
@@ -166,6 +167,12 @@ if(isset($_POST['buyPlayer'])) {
     </section>
 
 <?php
+
+if(isset($_POST['buyPlayer'])) {
+    echo '<script language="javascript">';
+    echo 'alert("' . $messageResponse . '")';
+    echo '</script>';
+}
 
 include_once('templates/footer.template.php');
 
