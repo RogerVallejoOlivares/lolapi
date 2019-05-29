@@ -43,11 +43,20 @@ def save_players():
         raise
 
 def save_match(participant, match):
-    summoner_name = participant.summoner.name
-    account_id = participant.summoner.account_id
-    summoner_id = participant.summoner.id
-    kda = participant.stats.kda
-    ranks = participant.summoner.ranks
+    summoner_name = None
+    account_id = None
+    summoner_id = None
+    kda = None
+    ranks = None
+
+    try:
+        summoner_name = participant.summoner.name
+        account_id = participant.summoner.account_id
+        summoner_id = participant.summoner.id
+        kda = participant.stats.kda
+        ranks = participant.summoner.ranks
+    except:
+        pass
 
     if not summoner_name or not account_id or not summoner_id or not kda or not ranks:
         return
@@ -87,7 +96,6 @@ def get_matches_from_summoner(summoner, recursive = False):
         match_history = summoner.match_history#cass.get_match_history(summoner=summoner, queues={Queue.ranked_solo_fives})
         match_history(seasons={CURRENT_SEASON}, queues=QUEUES, end_index=COMPUTABLE_MATCH_COUNT)
     except:
-        raise
         return
 
     match_count = 0
@@ -148,13 +156,14 @@ if __name__ == "__main__":
 
     #amigos_de_roger = ['Atzur', 'victorcr', 'mapilol', 'NashiraK', 'inferno0529', 'Amazing Onichan', 'D3VILJHO', 'Palxic']
 
-    random_players = ['damm1313', 'Blomster Finn', 'FatShield', 'IRoxas', 'OCE Import', 'MidN9t']
+    #random_players = ['damm1313', 'Blomster Finn', 'FatShield', 'IRoxas', 'OCE Import', 'MidN9t']
+    random_players = ['Blomster Finn', 'FatShield', 'IRoxas', 'OCE Import', 'MidN9t']
 
-    if True:
+    if False:
         for a in random_players:
             print(a)
             summoner = Summoner(name=a, region=API_REGION)
-            get_matches_from_summoner(summoner, True)
+            get_matches_from_summoner(summoner, False)
 
-    main(True)
+    main(False)
     save_players()
