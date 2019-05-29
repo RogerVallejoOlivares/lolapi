@@ -116,8 +116,8 @@
             </div>
 
             <div class="row" align="center"> <!-- Packs de jugadores y equipamientos aleatorios (¿mejor ponerlo encima del mercado?)-->
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-md-4 col-12 lowMarginBtm">
+                    <div class="card">
                         <div class="card-body">
                             <h5 class="card-title text-lot">Pack Low ELO players</h5>
                             <h6 class="card-subtitle mb-2 text-warning">500
@@ -125,14 +125,13 @@
                                     <i class="fas fa-coins fa-stack-1x fa-inverse text-warning"></i>
                                 </span></h6>
                             <p class="card-text">Three players unranked to silver and equipment, at least one Bronze</p>
-                            <form method="post" action="box.php">
-                                <input type="submit" class="btn btn-primary" name="box1" value="Buy">
-                            </form>
+                            <a href="box.php?id=1" class="btn btn-primary">Buy</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
+
+                <div class="col-md-4 col-12 lowMarginBtm">
+                    <div class="card">
                         <div class="card-body">
                             <h5 class="card-title text-lot">Pack mid ELO players</h5>
                             <h6 class="card-subtitle mb-2 text-warning">1000
@@ -140,14 +139,13 @@
                                     <i class="fas fa-coins fa-stack-1x fa-inverse text-warning"></i>
                                 </span></h6>
                             <p class="card-text">Three players gold to diamond and equipment, at least one platinum</p>
-                            <form method="post" action="box.php">
-                                <input type="submit" class="btn btn-primary" name="box2" value="Buy">
-                            </form>
+                            <a href="box.php?id=2" class="btn btn-primary">Buy</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
+
+                <div class="col-md-4 col-12 midMarginBtm">
+                    <div class="card" >
                         <div class="card-body">
                             <h5 class="card-title text-lot">Pack high ELO players</h5>
                             <h6 class="card-subtitle mb-2 text-warning">4000
