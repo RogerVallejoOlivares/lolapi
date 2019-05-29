@@ -64,6 +64,7 @@ class User {
             'password' => self::hashPassword($password),
             'phone' => isset($phone) ? $phone : '',
             'birthDay' => isset($birthDay) ? $birthDay : '',
+            'gold' => 1000
         );
 
         self::$db->insert(self::$tableName, $data);

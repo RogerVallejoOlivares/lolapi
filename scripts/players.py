@@ -163,7 +163,7 @@ if __name__ == "__main__":
         for a in random_players:
             print(a)
             summoner = Summoner(name=a, region=API_REGION)
-            get_matches_from_summoner(summoner, False)
+            get_matches_from_summoner(summoner, True)
 
     main(False)
     save_players()
