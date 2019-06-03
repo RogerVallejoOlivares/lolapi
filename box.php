@@ -236,7 +236,7 @@
 
 <?php
 
-if(isset($_GET['id'])) {
+if(isset($_GET['id']) && !empty($messageResponse)) {
     echo '<script language="javascript">';
     echo 'alert("' . $messageResponse . '")';
     echo '</script>';

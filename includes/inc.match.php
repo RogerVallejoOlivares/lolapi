@@ -7,6 +7,7 @@ class Match {
     private $enemyUser;
     private $date;
     private $winnerUser;
+    private static $tableName = 'matchhistory';
     
     public static $db;
     
@@ -59,7 +60,7 @@ class Match {
         
         self::$db->orderBy('date', 'DESC');
         self::$db->where('idManager1', $user->getId());
-        $matches = self::$db->get('matchHistory', $matchCount);
+        $matches = self::$db->get(self::$tableName, $matchCount);
         
         foreach($matches as $match) {
             $currentUser = User::getUserById($match['idManager1']);
@@ -78,7 +79,7 @@ class Match {
         return $matchHistory;
     }
     
-    public function do() {
+    public function doMatch() {
         $positions = Array('top', 'jungle', 'mid', 'adc', 'support');
         
         $totalCount = 0;
@@ -107,11 +108,7 @@ class Match {
             if(!$currentUserAligned->isSample()) {
                 $currentUserAligned->setContractDaysLeft($currentUserAligned->getContractDaysLeft() - 1);
             }
-            
-            if(!$enemyUserAligned->isSample()) {
-                $enemyUserAligned->setContractDaysLeft($enemyUserAligned->getContractDaysLeft() - 1);
-            }
-            
+                       
             $totalCount = $totalCount + 1;
         }
         
@@ -130,7 +127,7 @@ class Match {
             'date' => $this->date,
         );
 
-        $id = self::$db->insert('matchHistory', $data);
+        $id = self::$db->insert(self::$tableName, $data);
         
         return ($id);
     }

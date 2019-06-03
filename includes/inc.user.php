@@ -4,7 +4,7 @@ include(__DIR__ . '/../inc.config.php');
 
 class User {
 
-    private static $tableName = 'Manager'; // database table where users are stored
+    private static $tableName = 'manager'; // database table where users are stored
     private static $usernameField = 'email'; // database column with login username
     private static $sessionKey = 'name'; // key used in session variable to know if a user is logged in
     public static $db;

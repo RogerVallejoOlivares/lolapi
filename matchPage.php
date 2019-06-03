@@ -38,7 +38,7 @@
             echo "An user with this ID don't exist";
         } else {
             $match = new Match($currentUser, $enemyUser);
-            if (!$match->do()) {
+            if (!$match->doMatch()) {
                 echo 'Error while calculating match result';
             } else {
                 if ($match->isDraw()) {
