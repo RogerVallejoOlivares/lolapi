@@ -101,14 +101,14 @@
         }
         
         if($currentUser->getGold() < $price) {
-            echo "You don't have enough money!";            
+            $messageResponse = "You don't have enough money!";
         } else {        
             $contracts = rand($minContracts, $maxContracts);
             $positions = Array('top', 'jungle', 'mid', 'adc', 'support');
             
             foreach($players as $player) {
                 if($player === FALSE) {
-                    echo 'ERROR PLAYER<br>';
+                    $messageResponse = 'ERROR PLAYER<br>';
                     print_r($player);
                     continue;
                 }
@@ -189,8 +189,8 @@
             </div>
 
             <div class="row" align="center"> <!-- Packs de jugadores y equipamientos aleatorios (¿mejor ponerlo encima del mercado?)-->
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-md-4 col-12 lowMarginBtm">
+                    <div class="card">
                         <div class="card-body">
                             <h5 class="card-title text-lot">Pack Low ELO players</h5>
                             <h6 class="card-subtitle mb-2 text-warning">500
@@ -202,8 +202,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
+
+                <div class="col-md-4 col-12 lowMarginBtm">
+                    <div class="card">
                         <div class="card-body">
                             <h5 class="card-title text-lot">Pack mid ELO players</h5>
                             <h6 class="card-subtitle mb-2 text-warning">1000
@@ -215,8 +216,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
+
+                <div class="col-md-4 col-12 midMarginBtm">
+                    <div class="card" >
                         <div class="card-body">
                             <h5 class="card-title text-lot">Pack high ELO players</h5>
                             <h6 class="card-subtitle mb-2 text-warning">4000
@@ -234,7 +236,7 @@
 
 <?php
 
-if(isset($_POST['buyPlayer'])) {
+if(isset($_GET['id'])) {
     echo '<script language="javascript">';
     echo 'alert("' . $messageResponse . '")';
     echo '</script>';

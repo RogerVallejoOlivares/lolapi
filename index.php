@@ -167,7 +167,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="lNameSign">Lastname *</label>
-                                <input type="text" class="form-control" id="lNameSign" name="lName">
+                                <input type="text" class="form-control" id="lNameSign" name="lName" required>
                             </div>
                             <div class="form-group">
                                 <label for="emailSign">Email *</label>
@@ -179,7 +179,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="dateSign">date of birth *</label>
-                                <input type="date" class="form-control" id="dateSign" name="date" placeholder="dd/mm/yyyy">
+                                <input type="date" class="form-control" id="dateSign" name="date" placeholder="dd/mm/yyyy" required>
                             </div>
                             <div class="form-group">
                                 <label for="pwdSign">Password *</label>
